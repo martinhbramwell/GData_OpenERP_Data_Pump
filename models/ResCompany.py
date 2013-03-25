@@ -7,20 +7,40 @@ Created on 2013-03-19
 '''
 from OErpModel import OErpModel
 
-OPENERP_MODULE_NAME = 'res.users'
+OPENERP_MODULE_NAME = 'res.company'
 
 class ResCompany(OErpModel):
+
+    def __init__(self):
+        super(ResCompany, self).__init__()
+        
+        self.methods = {
+              'chkTask': self.chkTask
+        }
+
 
     def process(self, wrksht, rowTask):
         super(ResCompany, self).process(wrksht, rowTask)
         
         for idx, aMethod in enumerate(self.methodNames):
-            print aMethod
-            globals()[aMethod](self.parameters)
+
+            if super(ResCompany, self).todo(idx):
+                print '    #{} Doing "{}" now.'.format(idx+1, aMethod)
+                super(ResCompany, self).starting(idx)
+
+
+            	self.methods[aMethod](self.parameters)
+
+
+                super(ResCompany, self).finished(idx)
+                print '__'
+            else:
+                print '    #{} Skipping "{}"!'.format(idx+1, aMethod)
+
             pass
 
 
-def chkTask(parms):
+    def chkTask(self, parms):
         print 'Task check for key "docs_key" found : "' + parms['docs_key'] + '"!'
         print 'Task check for key "docs_sheet" found : "' + parms['docs_sheet'] + '"!'
 

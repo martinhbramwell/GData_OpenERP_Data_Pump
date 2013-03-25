@@ -25,7 +25,9 @@ def dispatchTasks(wkbk):
     # Having the name of each handler, dispatch to them
     for row, task in enumerate(namesTasks):
         if row > 1:
-            print 'Task#{} uses the module "{}".'.format(row - 1, task)
+            print '\n\nTask#{} uses the module "{}".'.format(row - 1, task)
+            print '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
+
             getattr(lazyModule('models.' + task), task)().process(wkbk, row+1)  
     return
 
@@ -62,20 +64,20 @@ def login():
 
 def main():
 
-    print ''
     google_connection = login()
-    if google_connection['connection'] is not None:
-        
-        wkbk = google_connection['connection'].open_by_key(google_connection['workbook_key'])
-        OErpModel.gDataConnection = google_connection['connection']
-        
-        OErpModel.openErpConnection = openerp_utils.connect(wkbk)
-        dispatchTasks(wkbk)
+    if google_connection is not None:
+        if google_connection['connection'] is not None:
+			
+            wkbk = google_connection['connection'].open_by_key(google_connection['workbook_key'])
+            OErpModel.gDataConnection = google_connection['connection']
+			
+            OErpModel.openErpConnection = openerp_utils.connect(wkbk)
+            dispatchTasks(wkbk)
 
     print ''
 
 if __name__ == '__main__':
 
-	main()
+    main()
 	
 

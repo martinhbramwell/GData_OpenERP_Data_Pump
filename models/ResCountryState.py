@@ -22,12 +22,23 @@ class ResCountryState(OErpModel):
     def process(self, wrksht, rowTask):
         super(ResCountryState, self).process(wrksht, rowTask)
         
-        THIS_MODULE_NAME = self.moduleName
-        
-        print self.methodNames
-        
         for idx, aMethod in enumerate(self.methodNames):
-            self.methods[aMethod](self.parameters)
+
+            if super(ResCountryState, self).todo(idx):
+                print '    #{} Doing "{}" now.'.format(idx+1, aMethod)
+                super(ResCountryState, self).starting(idx)
+
+
+            	self.methods[aMethod](self.parameters)
+
+
+                super(ResCountryState, self).finished(idx)
+                print '__'
+            else:
+                print '    #{} Skipping "{}"!'.format(idx+1, aMethod)
+
+            pass
+
 
     def chkTask(self, parms):
         print 'Task check for key "docs_key" found : "' + parms['docs_key'] + '"!'
