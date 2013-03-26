@@ -5,6 +5,7 @@ A very simple tool for feeding Google Spreadsheet data into the XMLRPC channel o
 
 As much as possible, it uses third party tools:
 - [gspread](https://pypi.python.org/pypi/gspread/)
+- [openerplib](https://pypi.python.org/pypi/openerp-client-lib)
 - [argparse](https://pypi.python.org/pypi/argparse)
 - [Importing](http://peak.telecommunity.com/DevCenter/Importing)
 
