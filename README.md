@@ -3,14 +3,14 @@ GData_OpenERP_Data_Pump
 
 A very simple tool for feeding Google Spreadsheet data into the XMLRPC channel of OpenERP V7.
 
-As much as possible, it uses third party tools:
+As much as possible, it uses third party tools to hide the complexity of XMLRPC and Google's and OpenERP's APIs:
 
 - [gspread](https://pypi.python.org/pypi/gspread/) - simplified wrapper to Google Spreadsheets API
 - [openerplib](https://pypi.python.org/pypi/openerp-client-lib) - simplified wrapper to OpenERP API
 - [argparse](https://pypi.python.org/pypi/argparse) - command line arguments organizer
 - [Importing](http://peak.telecommunity.com/DevCenter/Importing) - delay code module import until required
 
-This is an [overview diagram](https://docs.google.com/drawings/d/10hhX-2ChPynsfCaiQrNrt3eiy3m6j3Qz-0CF7NdnnQc) to show the main parts of the pump's operation.
+The [overview diagram](https://docs.google.com/drawings/d/10hhX-2ChPynsfCaiQrNrt3eiy3m6j3Qz-0CF7NdnnQc) shows the main parts of the pump's operation.
 
 This [detail diagram](https://docs.google.com/drawings/d/1Huy3CpSVM971iUX2M6bqBjjZIXES6SzchetloHjhy-I) shows the usage the pump makes of the columns in the controller sheets: *creds*, *tasks* and *parms*.
 
@@ -42,8 +42,10 @@ You will need to install the earlier mentioned third party tools:
     sudo easy_install argparse
     sudo easy_install Importing
 
+You will have to make a private copy of the two examples ([OpenErpGDataController](https://docs.google.com/spreadsheet/ccc?key=0AiVG6SoU001RdFdyc1NxOHN4eWZ6Q0lLMHVyWUpkaHc) and [OpenErpGDataModel](https://docs.google.com/spreadsheet/ccc?key=0AiVG6SoU001RdE9BNnljbFVpa0xfazk0SUZOeWx1aEE)).  Don't try to use the originals. It won't work.  The pump refers to the controller workbook by means of its search key and it, in turn, needs the search key of the model workbook.  Since you'll have made copies of both you'll need to be sure you use the correct keys.  
 
-You can then run . . . 
+
+With that complete you can then run. . . 
 
     /opt/GData_OpenERP_Data_Pump$ ./gDataTools.py
 
@@ -71,22 +73,30 @@ When that file exists the command line can be, simply . . .
     /opt/GData_OpenERP_Data_Pump$ ./gDataTools.py "0AiVG6SoU001RdFdyc1NxOHN4eWZ6Q0lLMHVyWUpkaHc"
     
 
+
 Minimal Module Example
 ----------------------
 
-The design of the pump allows you to add easily, one or more of your own *Model Class* handlers.  You have to make sure of three things:
+There is a [minimal example](https://github.com/martinhbramwell/GData_OpenERP_Data_Pump/blob/master/models/MinimalModuleExample.py) with a single method, in GitHub, which the [OpenErpGDataController](https://docs.google.com/spreadsheet/ccc?key=0AiVG6SoU001RdFdyc1NxOHN4eWZ6Q0lLMHVyWUpkaHc) example uses.
 
-1. there is a row in the *tasks* sheet that has the name of your class in column A.
-2. the names in the *Action Step* columns in that row match the names of methods of your class
-3. there is a 2 row parameter block in the parms with keys above and values below that are understood by your class methods.
+The design of the pump allows you to add easily, one or more of your own *Model Class* handlers.  They will inherit from `./models/OErpModel.py` Everything that can be handled in the parent class of the handlers **is** handled there.  Apart from the few print statements, there are no unnecessary lines.  A few things have to be done in the child classes so a small amount of code duplication results.  
 
-There is a [minimal example](https://github.com/martinhbramwell/GData_OpenERP_Data_Pump/blob/master/models/MinimalModuleExample.py) in GitHub, referred to in the [OpenErpGDataController](https://docs.google.com/spreadsheet/ccc?key=0AiVG6SoU001RdFdyc1NxOHN4eWZ6Q0lLMHVyWUpkaHc) example.  Everything that can be handled in the parent class **is** handled there.  Apart from the few print statements, there are no unnecessary lines.
+The best way to make a new one is to adapt the *Minimal Module Example* to your needs.
+
+In the spreadsheets, it's easiest and safest to copy the MinimalModuleExample rows and edit them. Pay attention to which cells have formulas.  You don't want to alter them.
+You have to make sure of four things:
+
+1. there is a row in the *tasks* sheet that has the name of your class in column A
+1. the names in the *Action Step* columns in that row match the names of methods of your class
+1. there is a 2-row parameter block in the parms with keys above and values below that are understood by your class methods
+1. the *Parameter Block* cell correctly identifies the 2-row range
+
 
 The customization steps are:
 
 - Search for "MinimalModuleExample", and replace all with your module name.
 - If you will be referring to a single OpenERP model, name it in the line beginning: `OPENERP_MODULE_NAME = `
-- Every new method you create (dimilar to `def chkTask(self, parms):`) must have an entry in the dictionary `self.methods` that is initialized in the `__init__(self)` method and used in the line `self.methods[aMethod](self.parameters)`
+- Every new method you create (similar to `def chkTask(self, parms):`) must have an entry in the dictionary `self.methods` that is initialized in the `__init__(self)` method and used in the line `self.methods[aMethod](self.parameters)`
 
 
 
@@ -95,7 +105,11 @@ Model Sheets
 
 Based on the pattern of loading name/value pairs into a dictionary, and passing the dictionary to a method, there is really no limit to what the called method can be made to do.
 
-[ResCountryState.py](https://github.com/martinhbramwell/GData_OpenERP_Data_Pump/blob/master/models/ResCountryState.py) provides a complete example of a high speed data load operation. The goal is collect the correct data for the `openerplib` command `user_model.load(fields, data)`.
+
+**ResCountryState example**
+- - - - - - - - - - - - - 
+
+[ResCountryState.py](https://github.com/martinhbramwell/GData_OpenERP_Data_Pump/blob/master/models/ResCountryState.py) provides a complete example of a high speed data load operation. The goal is to collect the correct data for the `openerplib` command `user_model.load(fields, data)`.
 
 In the *tasks* sheet, of [OpenErpGDataController](https://docs.google.com/spreadsheet/ccc?key=0AiVG6SoU001RdFdyc1NxOHN4eWZ6Q0lLMHVyWUpkaHc), the row containing the class name `ResCountryState` provides the method to be called (`load`) and the range in the *parms* sheet where the parameters for `load` can be found.  In the *tasks* sheet, the row containing the class name `ResCountryState` provides the key names, and the following row provides the values, to be added to the dictionary that will be passed to `load`.
 
@@ -125,8 +139,6 @@ The code is as follows :
 
         # . . . and data from ensuing rows
         data = super(ResCountryState, self).groupToArray(3, [cell.value for cell in wksht.range(parms['range'])])
-        for idx in range(4):
-            print data[idx]
 
 		# Get the model for loading . . . 
         user_model = OErpModel.openErpConnection.get_model(OPENERP_MODULE_NAME)
@@ -135,10 +147,39 @@ The code is as follows :
         user_model.load(fields, data)
 
 
+**ResUsers example**
+- - - - - - - - - - - - - 
+
+The class in [ResUsers.py](https://github.com/martinhbramwell/GData_OpenERP_Data_Pump/blob/master/models/ResUsers.py) shows a simple update of single model record.  It has no need to pull lots of data, so the *parms* page can provide what is needed directly.
+
+    def update(self, parms):
+               
+        # Loading to the OpenERP model 'res.user'
+        user_model = OErpModel.openErpConnection.get_model(OPENERP_MODULE_NAME)
+
+        # Obtain an array of record ids that match the selection criteria (only one in this case)
+        ids = user_model.search([("login", "=", "admin")])
+
+        # Read the existing data (only what we need)
+        user_info = user_model.read(ids[0], ["name", "tz"])
+
+        # Write it back out with update applied
+        user_model.write(ids[0], {"tz":parms['tz']})
 
 
 
 
+Repeat executions
+--------------------
 
+In each child class of `OErpModel.py` there should be calls to the parent class methods, `starting` and `finished` just before and just after the call to an *Action Step*, like this:
+
+    super(MinimalModuleExample, self).starting(idx)
+
+    self.methods[aMethod](self.parameters)
+
+    super(MinimalModuleExample, self).finished(idx)
+
+These calls update the *Bit Maps* cells *Complete* and *Incomplete*.
 
 
