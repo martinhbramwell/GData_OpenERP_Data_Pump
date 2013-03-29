@@ -83,7 +83,8 @@ The design of the pump allows you to add easily, one or more of your own *Model 
 
 The best way to make a new one is to adapt the *Minimal Module Example* to your needs.
 
-In the spreadsheets, it's easiest and safest to copy the MinimalModuleExample rows and edit them. Pay attention to which cells have formulas.  You don't want to alter them.
+In the spreadsheets, it's easiest and safest to copy the MinimalModuleExample rows and edit them. Pay attention to which cells have formulas (grey background); you don't want to alter them.
+
 You have to make sure of four things:
 
 1. there is a row in the *tasks* sheet that has the name of your class in column A
@@ -181,5 +182,29 @@ In each child class of `OErpModel.py` there should be calls to the parent class 
     super(MinimalModuleExample, self).finished(idx)
 
 These calls update the *Bit Maps* cells *Complete* and *Incomplete*.
+
+You can set the values in those two columns manually, but keep an eye on the last four *Binary* columns.
+
+They don't actually do anything, instead they are there to aid in seeing whether the right bits are set to enable only the required *Action Steps*.  The Pump itself also modifies those cells, setting the *Incomplete* bit to 0, when starting an *Action Step*, and setting the *Complete* bit to 1 when the *Action Step* is finished.
+
+The *Chk* column will turn red and indicate a discrepancy if the *Complete* and *Incomplete* bits do not add up to the *Length* value.  If you set those values with a discrepancy yourself, and ignore the red flag, then the Pump will throw an error when you run it.  Also, if a discrepancy shows after the Pump ran, then you know it experienced some other sort of error and could not complete the indicated step.
+
+The execution of example  with five *Action Steps* and *Complete* and *Incomplete* set to 27 and 4 respectively would produce a result log file like this:
+
+    Task#1 uses the module "MinimalModuleExample".
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Processing task #1
+    Task parameters found in range "A4:B5".
+        #1 Skipping "chkTask"!
+        #2 Skipping "chkTask"!
+        #3 Doing "chkTask" now.
+    Task check for key "first_parm" found : "dummy"!
+    __
+        #4 Skipping "chkTask"!
+        #5 Skipping "chkTask"!
+
+
+
+
 
 
