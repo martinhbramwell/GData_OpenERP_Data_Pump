@@ -16,7 +16,7 @@ This [detail diagram](https://docs.google.com/drawings/d/1Huy3CpSVM971iUX2M6bqBj
 
 There is a sample controller ([OpenErpGDataController](https://docs.google.com/spreadsheet/ccc?key=0AiVG6SoU001RdFdyc1NxOHN4eWZ6Q0lLMHVyWUpkaHc)) and a sample model ([OpenErpGDataModel](https://docs.google.com/spreadsheet/ccc?key=0AiVG6SoU001RdE9BNnljbFVpa0xfazk0SUZOeWx1aEE))
 
-The overall action is a dispatcher within a dispatcher; the outer dispatcher instantiates classes named in column A of the *tasks* sheet while the inner dispatcher calls methods on the class named in the *Action Step* cells of the same row.
+The overall action is a dispatcher within a dispatcher; the outer dispatcher instantiates classes named in column A of the *tasks* sheet while the inner dispatcher calls the _methods_ of the class that have been named in the *Action Step* cells of the same row.
 
 In more detail, the action is:
 

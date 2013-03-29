@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python 
 # -*- coding: utf-8 -*-
 '''
 Created on 2013-03-19
@@ -28,7 +28,7 @@ def dispatchTasks(wkbk):
             print '\n\nTask#{} uses the module "{}".'.format(row - 1, task)
             print '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
 
-            getattr(lazyModule('models.' + task), task)().process(wkbk, row+1)  
+            getattr(lazyModule('models.' + task), task)().process(wkbk, row)  
     return
 
 def login():

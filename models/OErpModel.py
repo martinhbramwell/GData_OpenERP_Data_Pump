@@ -52,9 +52,10 @@ class OErpModel(object):
         
     def starting(self, idx):
         # print 'Starting #' + str(idx)
+
         bit = ((self.mask -1) << idx) & self.mask
         col = 1 + OErpModel.CONSTANTS['INCOMPLETION_MAP']
-        row = self.currentRow
+        row = self.currentRow + 1
 
         incomplete = int(self.shtTasks.cell(row, col).value)    # cell(row, col)
         self.shtTasks.update_cell(row, col, bit & incomplete)   # update_cell(row, col, value)
@@ -62,9 +63,10 @@ class OErpModel(object):
 
     def finished(self, idx):
         # print 'Finished #' + str(idx)
+
         bit = 1 << idx
         col = 1 + OErpModel.CONSTANTS['COMPLETION_MAP']
-        row = self.currentRow
+        row = self.currentRow + 1
 
         incomplete = int(self.shtTasks.cell(row, col).value)    # cell(row, col)
         self.shtTasks.update_cell(row, col, bit | incomplete)   # update_cell(row, col, value)
@@ -82,8 +84,8 @@ class OErpModel(object):
         self.shtTasks = wrksht.worksheet("Tasks")
         shtParms = wrksht.worksheet("Parms")
 
-        self.task_parms = self.shtTasks.row_values(rowTask)
-        # print 'Task parameters found in range "{}".'.format(self.task_parms[1])
+        self.task_parms = self.shtTasks.row_values(rowTask+1)
+        print 'Task parameters found in range "{}".'.format(self.task_parms[1])
         
         parms_cells = shtParms.range(self.task_parms[1])
         
