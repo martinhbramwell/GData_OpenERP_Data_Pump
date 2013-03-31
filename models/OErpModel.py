@@ -170,6 +170,35 @@ class OErpModel(object):
         
         return regrouped
 
+    def right_most_column(self, rangeDef, wksht):
+        return wksht.get_int_addr(rangeDef.partition(":")[2])[1]
+
+    def load(self, parms, model):
+        print 'Loading to "{}".'.format(model)
+        wkbk = self.gDataConnection.open_by_key(parms['docs_key'])
+        wksht = wkbk.worksheet(parms['docs_sheet'])
+        
+        dictRange = self.getCellsRange(wksht, parms['range'])
+        numCols = self.right_most_column(dictRange['rangeDef'], wksht)
+        print 'Range is ' + str(numCols)
+
+
+        fields = wksht.row_values(int(parms['titles_row']))
+        print ' - - - fields - - - '
+        print fields
+        
+        data = self.groupToArray(numCols, [cell.value for cell in wksht.range(parms['range'])])
+        print ' - - -  data  - - - '
+        print data
+
+#        for idx in range(4):
+#            print data[idx]
+
+        user_model = self.openErpConnection.get_model(model)
+        user_model.load(fields, data)
+
+        print 'Done in OErpModel'
+        
 
 
 

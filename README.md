@@ -72,7 +72,7 @@ When that file exists the command line can be, simply . . .
 
     /opt/GData_OpenERP_Data_Pump$ ./gDataTools.py "0AiVG6SoU001RdFdyc1NxOHN4eWZ6Q0lLMHVyWUpkaHc"
     
-
+See the section *Repeat Execution* below to learn how to get fine grained control of which *Action Steps* are executed or skipped.
 
 Minimal Module Example
 ----------------------
@@ -89,7 +89,7 @@ You have to make sure of four things:
 
 1. there is a row in the *tasks* sheet that has the name of your class in column A
 1. the names in the *Action Step* columns in that row match the names of methods of your class
-1. there is a 2-row parameter block in the parms with keys above and values below that are understood by your class methods
+1. there is a 2-row parameter block in the *parms* sheet with keys above and values below that are understood by your class methods
 1. the *Parameter Block* cell correctly identifies the 2-row range
 
 
@@ -119,7 +119,7 @@ The keys/values have the following signfications:
 - `docs_key`/"0AiVG6SoU001RdE9BNnljbFVpa0xfazk0SUZOeWx1aEE" - The key to the Google Spreadsheet holding the data to be loaded.
 - `docs_sheet`/"res.country.state" - The name of the exact sheet holding the data to be loaded.
 - `titles_row`/"1" - The number of the row holding model attribute titles as specified in OpenERP.
-- `range`/"A2:C14" - The range of cells (12 rows : 3 columns) holding the data to be loaded.
+- `range`/"A2:C14" - The range of cells (13 rows : 3 columns) holding the data to be loaded.
 
 
 The code is as follows :
@@ -151,7 +151,7 @@ The code is as follows :
 **ResUsers example**
 - - - - - - - - - - - - - 
 
-The class in [ResUsers.py](https://github.com/martinhbramwell/GData_OpenERP_Data_Pump/blob/master/models/ResUsers.py) shows a simple update of single model record.  It has no need to pull lots of data, so the *parms* page can provide what is needed directly.
+The class in [ResUsers.py](https://github.com/martinhbramwell/GData_OpenERP_Data_Pump/blob/master/models/ResUsers.py) shows a simple update of a single model record.  It has no need to pull lots of data, so the *parms* page can provide what is needed directly.
 
     def update(self, parms):
                
@@ -189,7 +189,7 @@ They don't actually do anything, instead they are there to aid in seeing whether
 
 The *Chk* column will turn red and indicate a discrepancy if the *Complete* and *Incomplete* bits do not add up to the *Length* value.  If you set those values with a discrepancy yourself, and ignore the red flag, then the Pump will throw an error when you run it.  Also, if a discrepancy shows after the Pump ran, then you know it experienced some other sort of error and could not complete the indicated step.
 
-The execution of example  with five *Action Steps* and *Complete* and *Incomplete* set to 27 and 4 respectively would produce a result log file like this:
+The execution of an example  with five *Action Steps* and *Complete* and *Incomplete* set to 27 and 4 respectively would produce a result log file like this:
 
     Task#1 uses the module "MinimalModuleExample".
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
