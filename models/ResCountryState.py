@@ -45,6 +45,12 @@ class ResCountryState(OErpModel):
         print 'Task check for key "docs_sheet" found : "' + parms['docs_sheet'] + '"!'
 
     def load(self, parms):
+        print 'Calling parent to load to "{}".'.format(OPENERP_MODULE_NAME)
+
+        data = super(ResCountryState, self).load(parms, OPENERP_MODULE_NAME)
+        print 'Done in ResCountryState!'
+    
+    def loadXXX(self, parms):
         print 'Loading to "{}".'.format(OPENERP_MODULE_NAME)
         wkbk = OErpModel.gDataConnection.open_by_key(parms['docs_key'])
         wksht = wkbk.worksheet(parms['docs_sheet'])

@@ -178,16 +178,16 @@ class OErpModel(object):
         wkbk = self.gDataConnection.open_by_key(parms['docs_key'])
         wksht = wkbk.worksheet(parms['docs_sheet'])
         
-        dictRange = self.getCellsRange(wksht, parms['range'])
+        dictRange = self.getCellsRange(wksht, parms['data_range'])
         numCols = self.right_most_column(dictRange['rangeDef'], wksht)
         print 'Range is ' + str(numCols)
 
 
-        fields = wksht.row_values(int(parms['titles_row']))
+        fields = wksht.row_values(int(parms['titles_row']))[:numCols:]
         print ' - - - fields - - - '
         print fields
         
-        data = self.groupToArray(numCols, [cell.value for cell in wksht.range(parms['range'])])
+        data = self.groupToArray(numCols, [cell.value for cell in wksht.range(parms['data_range'])])
         print ' - - -  data  - - - '
         print data
 

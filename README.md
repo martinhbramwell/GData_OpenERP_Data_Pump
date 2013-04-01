@@ -32,6 +32,8 @@ In more detail, the action is:
 1. repeat for each *Action Step* method, for as many as indicated in the *Length* cell
 1. repeat for each *Model Class* 
 
+The remote procedures you can call are documented here : [ORM and models](http://doc.openerp.com/trunk/developers/server/api_models/)
+
 First time execution
 --------------------
 
