@@ -26,8 +26,6 @@ switches = [
             , ['p', '--user_pwd', 'Password of the connecting user.']
            ]
 
-{"user_context": "en_US", "user_id": "admin", "user_pwd": "okok", "db_name": "test_db", "super_pwd": "%$TR54tr", "host_name": "erp.fleetingclouds.com"}
-
 class InputError(Exception):
     """ Exception raised for errors in the input.
     Attributes:
