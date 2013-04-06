@@ -26,7 +26,7 @@ In more detail, the action is:
 1. from the *parms* sheet, get the two-row range indicated in the *Parameter Block* cell of the *tasks* sheet row
 1. instantiate the class specified by the *Model Class* column, passing in the above parameter block row
 1. read from one of the *Action Step* columns the name of one the class's methods, only if the corresponding bit in the *Incomplete* bit map is set to 1, and the same bit in the *Complete* bit map is cleared to 0, otherwise skip to the next one. If both bits are 0 or both are 1, an error has occured
-1. set the *Incomplete* bit to 0
+1. clear the *Incomplete* bit to 0
 1. execute the indicated method
 1. set the *Complete* bit to 1
 1. repeat for each *Action Step* method, for as many as indicated in the *Length* cell
@@ -194,7 +194,7 @@ These calls update the *Bit Maps* cells *Complete* and *Incomplete*.
 
 You can set the values in those two columns manually, but keep an eye on the last four *Binary* columns.
 
-They don't actually do anything, instead they are there to aid in seeing whether the right bits are set to enable only the required *Action Steps*.  The Pump itself also modifies those cells, setting the *Incomplete* bit to 0, when starting an *Action Step*, and setting the *Complete* bit to 1 when the *Action Step* is finished.
+They don't actually do anything, instead they are there to aid in seeing whether the right bits are set to enable only the required *Action Steps*.  The Pump itself also modifies those cells, clearing the *Incomplete* bit to 0, when starting an *Action Step*, and setting the *Complete* bit to 1 when the *Action Step* is finished.
 
 The *Chk* column will turn red and indicate a discrepancy if the *Complete* and *Incomplete* bits do not add up to the *Length* value.  If you set those values with a discrepancy yourself, and ignore the red flag, then the Pump will throw an error when you run it.  Also, if a discrepancy shows after the Pump ran, then you know it experienced some other sort of error and could not complete the indicated step.
 
