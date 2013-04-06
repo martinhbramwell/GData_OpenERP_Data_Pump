@@ -25,7 +25,7 @@ In more detail, the action is:
 1. get a row from the *tasks* sheet
 1. from the *parms* sheet, get the two-row range indicated in the *Parameter Block* cell of the *tasks* sheet row
 1. instantiate the class specified by the *Model Class* column, passing in the above parameter block row
-1. read from one of the *Action Step* columns the name of one the class's methods, if the corresponding bit in the *Incomplete* bit map is 1, and the same bit in the *Complete* bit map is 0, otherwise skip to the next one. If both bits are 0 or both are 1, an error has occured
+1. read from one of the *Action Step* columns the name of one the class's methods, only if the corresponding bit in the *Incomplete* bit map is set to 1, and the same bit in the *Complete* bit map is cleared to 0, otherwise skip to the next one. If both bits are 0 or both are 1, an error has occured
 1. set the *Incomplete* bit to 0
 1. execute the indicated method
 1. set the *Complete* bit to 1
@@ -33,6 +33,13 @@ In more detail, the action is:
 1. repeat for each *Model Class* 
 
 The remote procedures you can call are documented here : [ORM and models](http://doc.openerp.com/trunk/developers/server/api_models/)
+
+__Credits__ : 
+
+1. Some ideas pilfered from here [https://gist.github.com/t3dev/3016471](https://gist.github.com/t3dev/3016471)
+2. Code developed and run on a ´KVM 7´ from the **so_great_you_cannot_believe_it** VPS service of [https://www.prometeus.net/billing/cart.php?gid=13](https://www.prometeus.net/billing/cart.php?gid=13)
+3. Editing done through the really cool browser based IDE [https://github.com/mattpass/ICEcoder](https://github.com/mattpass/ICEcoder)
+
 
 First time execution
 --------------------
