@@ -68,10 +68,6 @@ def getPumpCredentials(wkbk):
     
     creds = {t[0]:t[1] for t in lstlstCreds}
 
-    creds['host_name'] = 'erp.fleetingclouds.com'
-    creds['user_pwd'] = 'okok'
-    creds['super_pwd'] = '%$TR54tr'
-
     return creds
 
 
