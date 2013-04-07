@@ -212,7 +212,11 @@ The execution of an example  with five *Action Steps* and *Complete* and *Incomp
         #4 Skipping "chkTask"!
         #5 Skipping "chkTask"!
 
+Notes
+- - - - 
 
+Some useful documentation:
+[http://pythonhosted.org/OERPLib/tutorials.html](http://pythonhosted.org/OERPLib/tutorials.html)
 
 
 
