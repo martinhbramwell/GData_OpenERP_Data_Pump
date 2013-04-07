@@ -115,6 +115,8 @@ Model Sheets
 
 Based on the pattern of loading name/value pairs into a dictionary, and passing the dictionary to a method, there is really no limit to what the called method can be made to do.
 
+Note: The *parms* sheet and Python code could be made more intelligent about deriving row and column ranges from source data sheets.  Rightly or wrongly, I decided that it was wise to leave that responsibility with users. 
+
 
 **ResCountryState example**
 - - - - - - - - - - - - - 
@@ -220,7 +222,6 @@ Some useful documentation:
 - for the db service:
   - [http://pythonhosted.org/OERPLib/tutorials.html](http://pythonhosted.org/OERPLib/tutorials.html)
   - [http://pythonhosted.org/OERPLib/ref_db.html#oerplib.service.db.DB](http://pythonhosted.org/OERPLib/ref_db.html#oerplib.service.db.DB)
-
 
 
 
