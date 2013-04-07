@@ -48,15 +48,26 @@ class ResUsers(OErpModel):
         # print ' #   #   #   #   #   #   #   #   #   #  \n'
 
     def chkTask(self, parms):
-        print 'Task check for key "login" found : "' + parms['login'] + '"!'
+        print 'Task check . . . '
+        for key  in parms:
+            if key not in ("ResUsers", "login"):
+                print "Key : " + key + "  Parm : "
+                print OErpModel.parseSpecial(self, parms[key])
     
     
     def update(self, parms):
                
         user_model = OErpModel.openErpConnection.get_model(OPENERP_MODULE_NAME)
-        ids = user_model.search([("login", "=", "admin")])
-        user_info = user_model.read(ids[0], ["name", "tz"])
-        print user_info["name"] + " has timezone " + str(user_info["tz"])
-        
-        user_model.write(ids[0], {"tz":parms['tz']})
+
+        thisUser = user_model.search([("login", "=", parms['login'])])[0]
+        nameUser = user_model.read(thisUser, ["name"])["name"]
+        print "Login " + parms['login'] + " -- " + nameUser
+
+        user_info = user_model.read(thisUser, ["in_group_4", "in_group_6", "tz", "active"])
+
+        for key  in parms:
+            if key not in ("ResUsers", "login"):  
+                val = OErpModel.parseSpecial(self, parms[key]) 
+                print 'Writing : (thisUser, "{}":"{}") from "{}"'.format(key, val, parms[key])
+                user_model.write(thisUser, {key:val})
 

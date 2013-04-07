@@ -213,3 +213,28 @@ class OErpModel(object):
 
         print 'Done in OErpModel'
         
+    def parseSpecial(self, special):
+        spec = special.lower()
+        if spec.startswith('boolean'):
+            if (spec[8] in "01"):
+                if ("0" == spec[8]):
+                    return False
+                else:
+                    return True
+            else:
+                return special
+        elif spec.startswith('integer'):
+            val = spec.strip('integer()')
+            if val.lstrip("-+").isdigit():
+                return int(val)
+            else:
+                return special
+        elif spec.startswith('float'):
+            val = spec.strip('float()')
+            try:
+                return float(val)
+            except ValueError:
+                return special
+        else:
+            return special 
+
