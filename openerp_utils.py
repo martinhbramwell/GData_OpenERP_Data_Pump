@@ -7,13 +7,8 @@ Created on 2013-03-19
 '''
 import openerplib
 
-def connect(wkbk):
+def connect(creds):
 
-    shtCreds = wkbk.worksheet("Creds")
-    lstlstCreds = shtCreds.get_all_values()
-    
-    creds = {t[0]:t[1] for t in lstlstCreds}
-    
     connection = openerplib.get_connection(
                                           login = creds['user_id']
                                         , database = creds['db_name']
@@ -22,6 +17,7 @@ def connect(wkbk):
                                         , protocol = 'xmlrpc'
                                         , port = 8069
                                       )
+
     print 'Connected to OpenERP database "{}" on server "{}".'.format(creds['db_name'], creds['host_name'])
     return connection
 

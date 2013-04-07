@@ -16,7 +16,7 @@ class IrModuleModule(OErpModel):
         
         self.methods = {
               'chkTask': self.chkTask
-            , 'install_update_module': self.install_update_module
+            , 'install_module': self.install_module
         }
 
     def process(self, wrksht, rowTask):
@@ -45,26 +45,34 @@ class IrModuleModule(OErpModel):
     def chkTask(self, parms):
         print 'Task check for key "docs_key" found : "' + parms['docs_key'] + '"!'
         print 'Task check for key "docs_sheet" found : "' + parms['docs_sheet'] + '"!'
+        print 'Task check for key "titles_row" found : "' + parms['titles_row'] + '"!'
+        print 'Task check for key "data_range" found : "' + parms['data_range'] + '"!'
 
-    def install_update_module(self, parms):
-        # install/update/upgrade module
+
+    def install_module(self, parms):
+
         print " - * - * - * - * - * - * - * - * - * - *"
-        nameModule = connection.get_model(OPENERP_MODULE_NAME)
-        print "nameModule " + nameModule
-        idModule = nameModule.search([('name', '=', parms['name'])])
-        print "idModule " + idModule
-        module = nameModule.read(idModule[0])
-        print '{0}'.format(module['state'])
-        if not module['state'] == 'installed':
-            print 'installing "{0}"'.format(name)
-            nameModule.button_immediate_install([idModule[0]])
-        elif update:
-            print 'upgrading "{0}"'.format(name)
-            nameModule.button_upgrade([idModule[0]])
-            upgrade_id = connection.get_model('base.module.upgrade').create({'module_info': idModule[0]})
-            connection.get_model('base.module.upgrade').upgrade_module(upgrade_id)
-        else:
-            print 'skipping "{0}"'.format(name) 
 
+        oerpModel = OErpModel.openErpConnection.get_model(OPENERP_MODULE_NAME)
+
+        module_parms = super(IrModuleModule, self).getWorkingSource(parms)
+        listModuleNames = module_parms['wksht'].col_values(1)
+
+        idx = module_parms['dictRange']['minRow'] - 1
+        while (idx < module_parms['dictRange']['maxRow']):
+            nameModule = listModuleNames[idx]
+            print 'Module name : ' + nameModule
+            idModule = oerpModel.search([('name', '=', nameModule)])[0]
+            print "Module ID #" + str(idModule)
+            module = oerpModel.read(idModule)
+            stateModule = module['state']
+
+            if not module['state'] == 'installed':
+                print 'Now installing module "{}"'.format(nameModule)
+                oerpModel.button_immediate_install([idModule])
+            else:
+                print 'Doing nothing with module "{}" in state "{}"'.format(nameModule, stateModule) 
+
+            idx += 1
 
 

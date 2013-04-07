@@ -10,6 +10,7 @@ class OErpModel(object):
 
     openErpConnection = None
     gDataConnection = None
+    pumpCredentials = None
     
     CONSTANTS = {}
     
@@ -173,6 +174,19 @@ class OErpModel(object):
     def right_most_column(self, rangeDef, wksht):
         return wksht.get_int_addr(rangeDef.partition(":")[2])[1]
 
+    def getWorkingSource(self, parms):
+        module_parms = {}
+        module_parms['wkbk'] = self.gDataConnection.open_by_key(parms['docs_key'])
+        module_parms['wksht'] = module_parms['wkbk'].worksheet(parms['docs_sheet'])
+
+        module_parms['dictRange'] = self.getCellsRange(module_parms['wksht'], parms['data_range'])
+        module_parms['numCols'] = self.right_most_column(module_parms['dictRange']['rangeDef'], module_parms['wksht'])
+        # print 'Column count is ' + str(module_parms['numCols'])
+
+        return module_parms
+
+
+
     def load(self, parms, model):
         print 'Loading to "{}".'.format(model)
         wkbk = self.gDataConnection.open_by_key(parms['docs_key'])
@@ -199,6 +213,3 @@ class OErpModel(object):
 
         print 'Done in OErpModel'
         
-
-
-

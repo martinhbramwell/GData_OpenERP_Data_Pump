@@ -35,9 +35,10 @@ def login():
     
     gc = {}
     
+    credentials = creds.get()
+
     # Get Google uid/pwd from ~/.gdataCreds  a file in the format
     #      {"user_id": "yourGoogleUID", "user_pwd": "yourGoogleUID"}
-    credentials = creds.get()
 
     gc['workbook_key'] = credentials['key']
     
@@ -60,18 +61,34 @@ def login():
     creds.silentremove(creds.credential_path)
     return None
                 
+def getPumpCredentials(wkbk):
+
+    shtCreds = wkbk.worksheet("Creds")
+    lstlstCreds = shtCreds.get_all_values()
+    
+    creds = {t[0]:t[1] for t in lstlstCreds}
+
+    creds['host_name'] = 'erp.fleetingclouds.com'
+    creds['user_pwd'] = 'okok'
+    creds['super_pwd'] = '%$TR54tr'
+
+    return creds
 
 
 def main():
 
     google_connection = login()
+
     if google_connection is not None:
         if google_connection['connection'] is not None:
-			
-            wkbk = google_connection['connection'].open_by_key(google_connection['workbook_key'])
+
             OErpModel.gDataConnection = google_connection['connection']
+
+            wkbk = OErpModel.gDataConnection.open_by_key(google_connection['workbook_key'])
+
+            OErpModel.pumpCredentials = getPumpCredentials(wkbk)
+            OErpModel.openErpConnection = openerp_utils.connect(OErpModel.pumpCredentials)
 			
-            OErpModel.openErpConnection = openerp_utils.connect(wkbk)
             dispatchTasks(wkbk)
 
     print ''
@@ -80,4 +97,3 @@ if __name__ == '__main__':
 
     main()
 	
-
