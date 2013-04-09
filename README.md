@@ -40,7 +40,7 @@ __Credits__ :
 
 1. Some ideas pilfered from here [https://gist.github.com/t3dev/3016471](https://gist.github.com/t3dev/3016471)
 2. Code developed and run on a ´KVM 7´ from the **so_great_you_cannot_believe_it** VPS service of [https://www.prometeus.net/billing/cart.php?gid=13](https://www.prometeus.net/billing/cart.php?gid=13)
-3. Editing done through the really cool browser based IDE [https://github.com/mattpass/ICEcoder](https://github.com/mattpass/ICEcoder)
+3. Editing done through the **really cool** browser based IDE [https://github.com/mattpass/ICEcoder](https://github.com/mattpass/ICEcoder)
 
 
 First time execution
