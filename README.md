@@ -3,6 +3,8 @@ GData_OpenERP_Data_Pump
 
 A very simple tool for feeding Google Spreadsheet data into the XMLRPC channel of OpenERP V7.
 
+The goal is to facilitate controlling OpenERP instances from command line and DevOps tools (such as [http://jenkins-ci.org/](http://jenkins-ci.org/), [http://rundeck.org/](http://rundeck.org/), etc. )
+
 As much as possible, it uses third party tools to hide the complexity of XMLRPC and Google's and OpenERP's APIs:
 
 - [gspread](https://pypi.python.org/pypi/gspread/) - simplified wrapper to Google Spreadsheets API
