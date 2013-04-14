@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <title>Gdata openerp data pump by martinhbramwell</title>
+  </head>
+
+  <body>
+    <div id="container">
+      <div class="inner">
+
+        <header>
+          <h1>Gdata openerp data pump</h1>
+          <h2>A very simple tool for feeding Google Spreadsheet data into the XMLRPC channel of OpenERP V7.</h2>
+        </header>
+
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/martinhbramwell/GData_OpenERP_Data_Pump/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/martinhbramwell/GData_OpenERP_Data_Pump/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/martinhbramwell/GData_OpenERP_Data_Pump" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
+
+        <hr>
+
+        <section id="main_content">
+          <h1>GData_OpenERP_Data_Pump</h1>
+
+<p>A very simple tool for feeding Google Spreadsheet data into the XMLRPC channel of OpenERP V7.</p>
+
+<p>The goal is to facilitate controlling OpenERP instances from command line and DevOps tools (such as <a href="http://jenkins-ci.org/">http://jenkins-ci.org/</a>, <a href="http://rundeck.org/">http://rundeck.org/</a>, etc. )</p>
+
+<p>As much as possible, it uses third party tools to hide the complexity of XMLRPC and Google's and OpenERP's APIs:</p>
+
+<ul>
+<li>
+<a href="https://pypi.python.org/pypi/gspread/">gspread</a> - simplified wrapper to Google Spreadsheets API</li>
+<li>
+<a href="https://pypi.python.org/pypi/openerp-client-lib">openerplib</a> - simplified wrapper to OpenERP API</li>
+<li>
+<a href="https://pypi.python.org/pypi/argparse">argparse</a> - command line arguments organizer</li>
+<li>
+<a href="http://peak.telecommunity.com/DevCenter/Importing">Importing</a> - delay code module import until required</li>
+</ul><p>The <a href="https://docs.google.com/drawings/d/10hhX-2ChPynsfCaiQrNrt3eiy3m6j3Qz-0CF7NdnnQc">overview diagram</a> shows the main parts of the pump's operation.</p>
+
+<p>This <a href="https://docs.google.com/drawings/d/1Huy3CpSVM971iUX2M6bqBjjZIXES6SzchetloHjhy-I">detail diagram</a> shows the usage the pump makes of the columns in the controller sheets: <em>creds</em>, <em>tasks</em> and <em>parms</em>.</p>
+
+<p>There is a sample controller (<a href="https://docs.google.com/spreadsheet/ccc?key=0AiVG6SoU001RdFdyc1NxOHN4eWZ6Q0lLMHVyWUpkaHc">OpenErpGDataController</a>) and a sample model (<a href="https://docs.google.com/spreadsheet/ccc?key=0AiVG6SoU001RdE9BNnljbFVpa0xfazk0SUZOeWx1aEE">OpenErpGDataModel</a>) (TODO: test copying with Excel &amp;/or Libre Office)</p>
+
+<p>The overall action is a dispatcher within a dispatcher; the outer dispatcher instantiates classes named in column A of the <em>tasks</em> sheet while the inner dispatcher calls the <em>methods</em> of the class that have been named in the <em>Action Step</em> cells of the same row.</p>
+
+<p>In more detail, the action is:</p>
+
+<ol>
+<li>connect to Google</li>
+<li>connect to OpenERP using the credentials from the <em>creds</em> sheet</li>
+<li>get a row from the <em>tasks</em> sheet</li>
+<li>from the <em>parms</em> sheet, get the two-row range indicated in the <em>Parameter Block</em> cell of the <em>tasks</em> sheet row</li>
+<li>instantiate the class specified by the <em>Model Class</em> column, passing in the above parameter block row</li>
+<li>read from one of the <em>Action Step</em> columns the name of one the class's methods, only if the corresponding bit in the <em>Incomplete</em> bit map is set to 1, and the same bit in the <em>Complete</em> bit map is cleared to 0, otherwise skip to the next one. If both bits are 0 or both are 1, an error has occured</li>
+<li>clear the <em>Incomplete</em> bit to 0</li>
+<li>execute the indicated method</li>
+<li>set the <em>Complete</em> bit to 1</li>
+<li>repeat for each <em>Action Step</em> method, for as many as indicated in the <em>Length</em> cell</li>
+<li>repeat for each <em>Model Class</em> </li>
+</ol><p>The remote procedures you can call are documented here : <a href="http://doc.openerp.com/trunk/developers/server/api_models/">ORM and models</a></p>
+
+<p><strong>Credits</strong> : </p>
+
+<ol>
+<li>Some ideas pilfered from here <a href="https://gist.github.com/t3dev/3016471">https://gist.github.com/t3dev/3016471</a>
+</li>
+<li>Code developed and run on a ´KVM 7´ from the <strong>so_great_you_cannot_believe_it</strong> VPS service of <a href="https://www.prometeus.net/billing/cart.php?gid=13">https://www.prometeus.net/billing/cart.php?gid=13</a>
+</li>
+<li>Editing done through the <strong>really cool</strong> browser based IDE <a href="https://github.com/mattpass/ICEcoder">https://github.com/mattpass/ICEcoder</a>
+</li>
+</ol><h2>First time execution</h2>
+
+<p>You will need to install the earlier mentioned third party tools:</p>
+
+<pre><code>sudo easy_install gspread
+sudo easy_install openerplib
+sudo easy_install argparse
+sudo easy_install Importing
+</code></pre>
+
+<p>You will have to make a private copy of the two examples (<a href="https://docs.google.com/spreadsheet/ccc?key=0AiVG6SoU001RdFdyc1NxOHN4eWZ6Q0lLMHVyWUpkaHc">OpenErpGDataController</a> and <a href="https://docs.google.com/spreadsheet/ccc?key=0AiVG6SoU001RdE9BNnljbFVpa0xfazk0SUZOeWx1aEE">OpenErpGDataModel</a>).  Don't try to use the originals. It won't work.  The pump refers to the controller workbook by means of its search key and it, in turn, needs the search key of the model workbook.  Since you'll have made copies of both you'll need to be sure you use the correct keys.  </p>
+
+<p>With that complete you can then run. . . </p>
+
+<pre><code>/opt/GData_OpenERP_Data_Pump$ ./gDataTools.py
+</code></pre>
+
+<p>. . . to get . . . </p>
+
+<pre><code>usage: gDataTools.py [-h] [-p USER_PWD] [-u USER_ID] key
+gDataTools.py: error: too few arguments
+</code></pre>
+
+<p>The missing parameters are the access credentials for the <a href="https://docs.google.com/spreadsheet/ccc?key=0AiVG6SoU001RdFdyc1NxOHN4eWZ6Q0lLMHVyWUpkaHc">OpenErpGDataController</a></p>
+
+<ul>
+<li>[-u USER_ID] - Google user ID</li>
+<li>[-p USER_PWD] - Google user password </li>
+<li>key - the spreadsheet key taken from URL of the spreadsheet. Eg: "0AiVG6SoU001RdFdyc1NxOHN4eWZ6Q0lLMHVyWUpkaHc"</li>
+</ul><p>Thus a valid call would be . . . </p>
+
+<pre><code>/opt/GData_OpenERP_Data_Pump$ ./gDataTools.py -u yourgoogleid -p yourgooglepwd "0AiVG6SoU001RdFdyc1NxOHN4eWZ6Q0lLMHVyWUpkaHc"
+</code></pre>
+
+<p>However, to avoid UID and PWD from appearing in the command line, <code>gDataTools.py</code> will record those values in the file <code>.gdataCreds</code> that has the form :</p>
+
+<pre><code>{"user_id": "yourgoogleid", "user_pwd": "yourgooglepwd"} 
+</code></pre>
+
+<p>When that file exists the command line can be, simply . . . </p>
+
+<pre><code>/opt/GData_OpenERP_Data_Pump$ ./gDataTools.py "0AiVG6SoU001RdFdyc1NxOHN4eWZ6Q0lLMHVyWUpkaHc"
+</code></pre>
+
+<p>See the section <em>Repeat Execution</em> below to learn how to get fine grained control of which <em>Action Steps</em> are executed or skipped.</p>
+
+<h2>Minimal Module Example</h2>
+
+<p>There is a <a href="https://github.com/martinhbramwell/GData_OpenERP_Data_Pump/blob/master/models/MinimalModuleExample.py">minimal example</a> with a single method, in GitHub, which the <a href="https://docs.google.com/spreadsheet/ccc?key=0AiVG6SoU001RdFdyc1NxOHN4eWZ6Q0lLMHVyWUpkaHc">OpenErpGDataController</a> example uses.</p>
+
+<p>The design of the pump allows you to add easily, one or more of your own <em>Model Class</em> handlers.  They will inherit from <code>./models/OErpModel.py</code> Everything that can be handled in the parent class of the handlers <strong>is</strong> handled there.  Apart from the few print statements, there are no unnecessary lines.  A few things have to be done in the child classes so a small amount of code duplication results.  </p>
+
+<p>The best way to make a new one is to adapt the <em>Minimal Module Example</em> to your needs.</p>
+
+<p>In the spreadsheets, it's easiest and safest to copy the MinimalModuleExample rows and edit them. Pay attention to which cells have formulas (grey background); you don't want to alter them.</p>
+
+<p>You have to make sure of four things:</p>
+
+<ol>
+<li>there is a row in the <em>tasks</em> sheet that has the name of your class in column A</li>
+<li>the names in the <em>Action Step</em> columns in that row match the names of methods of your class</li>
+<li>there is a 2-row parameter block in the <em>parms</em> sheet with keys above and values below that are understood by your class methods</li>
+<li>the <em>Parameter Block</em> cell correctly identifies the 2-row range</li>
+</ol><p>The customization steps are:</p>
+
+<ul>
+<li>Search for "MinimalModuleExample", and replace all with your module name.</li>
+<li>If you will be referring to a single OpenERP model, name it in the line beginning: <code>OPENERP_MODULE_NAME =</code>
+</li>
+<li>Every new method you create (similar to <code>def chkTask(self, parms):</code>) must have an entry in the dictionary <code>self.methods</code> that is initialized in the <code>__init__(self)</code> method and used in the line <code>self.methods[aMethod](self.parameters)</code>
+</li>
+</ul><h2>Model Sheets</h2>
+
+<p>Based on the pattern of loading name/value pairs into a dictionary, and passing the dictionary to a method, there is really no limit to what the called method can be made to do.</p>
+
+<p>Note: The <em>parms</em> sheet and Python code could be made more intelligent about deriving row and column ranges from source data sheets.  Rightly or wrongly, I decided that it was wise to leave that responsibility with users. </p>
+
+<p><strong>ResCountryState example</strong></p>
+
+<hr><p><a href="https://github.com/martinhbramwell/GData_OpenERP_Data_Pump/blob/master/models/ResCountryState.py">ResCountryState.py</a> provides a complete example of a high speed data load operation. The goal is to collect the correct data for the <code>openerplib</code> command <code>user_model.load(fields, data)</code>.</p>
+
+<p>In the <em>tasks</em> sheet, of <a href="https://docs.google.com/spreadsheet/ccc?key=0AiVG6SoU001RdFdyc1NxOHN4eWZ6Q0lLMHVyWUpkaHc">OpenErpGDataController</a>, the row containing the class name <code>ResCountryState</code> provides the method to be called (<code>load</code>) and the range in the <em>parms</em> sheet where the parameters for <code>load</code> can be found.  In the <em>tasks</em> sheet, the row containing the class name <code>ResCountryState</code> provides the key names, and the following row provides the values, to be added to the dictionary that will be passed to <code>load</code>.</p>
+
+<p>The keys/values have the following signfications:</p>
+
+<ul>
+<li>
+<code>docs_key</code>/"0AiVG6SoU001RdE9BNnljbFVpa0xfazk0SUZOeWx1aEE" - The key to the Google Spreadsheet holding the data to be loaded.</li>
+<li>
+<code>docs_sheet</code>/"res.country.state" - The name of the exact sheet holding the data to be loaded.</li>
+<li>
+<code>titles_row</code>/"1" - The number of the row holding model attribute titles as specified in OpenERP.</li>
+<li>
+<code>range</code>/"A2:C14" - The range of cells (13 rows : 3 columns) holding the data to be loaded.</li>
+</ul><p>The code is as follows :</p>
+
+<pre><code>def load(self, parms):
+
+    # Loading to the OpenERP model 'res.country.state'
+    wkbk = OErpModel.gDataConnection.open_by_key(parms['docs_key'])
+
+    # Obtaining data from the sheet 'res.country.state' . . . 
+    wksht = wkbk.worksheet(parms['docs_sheet'])
+
+    # . . . in the range A2:C14
+    dictRange = super(ResCountryState, self).getCellsRange(wksht, parms['range'])
+
+    # With titles from the first row of the sheet . . . 
+    fields = wksht.row_values(int(parms['titles_row']))
+
+    # . . . and data from ensuing rows
+    data = super(ResCountryState, self).groupToArray(3, [cell.value for cell in wksht.range(parms['range'])])
+
+    # Get the model for loading . . . 
+    user_model = OErpModel.openErpConnection.get_model(OPENERP_MODULE_NAME)
+
+    # . . . and load it.
+    user_model.load(fields, data)
+</code></pre>
+
+<p><strong>ResUsers example</strong></p>
+
+<hr><p>The class in <a href="https://github.com/martinhbramwell/GData_OpenERP_Data_Pump/blob/master/models/ResUsers.py">ResUsers.py</a> shows a simple update of a single model record.  It has no need to pull lots of data, so the <em>parms</em> page can provide what is needed directly.</p>
+
+<pre><code>def update(self, parms):
+
+    # Loading to the OpenERP model 'res.user'
+    user_model = OErpModel.openErpConnection.get_model(OPENERP_MODULE_NAME)
+
+    # Obtain an array of record ids that match the selection criteria (only one in this case)
+    ids = user_model.search([("login", "=", "admin")])
+
+    # Read the existing data (only what we need)
+    user_info = user_model.read(ids[0], ["name", "tz"])
+
+    # Write it back out with update applied
+    user_model.write(ids[0], {"tz":parms['tz']})
+</code></pre>
+
+<h2>Repeat executions</h2>
+
+<p>In each child class of <code>OErpModel.py</code> there should be calls to the parent class methods, <code>starting</code> and <code>finished</code> just before and just after the call to an <em>Action Step</em>, like this:</p>
+
+<pre><code>super(MinimalModuleExample, self).starting(idx)
+
+self.methods[aMethod](self.parameters)
+
+super(MinimalModuleExample, self).finished(idx)
+</code></pre>
+
+<p>These calls update the <em>Bit Maps</em> cells <em>Complete</em> and <em>Incomplete</em>.</p>
+
+<p>You can set the values in those two columns manually, but keep an eye on the last four <em>Binary</em> columns.</p>
+
+<p>They don't actually do anything, instead they are there to aid in seeing whether the right bits are set to enable only the required <em>Action Steps</em>.  The Pump itself also modifies those cells, clearing the <em>Incomplete</em> bit to 0, when starting an <em>Action Step</em>, and setting the <em>Complete</em> bit to 1 when the <em>Action Step</em> is finished.</p>
+
+<p>The <em>Chk</em> column will turn red and indicate a discrepancy if the <em>Complete</em> and <em>Incomplete</em> bits do not add up to the <em>Length</em> value.  If you set those values with a discrepancy yourself, and ignore the red flag, then the Pump will throw an error when you run it.  Also, if a discrepancy shows after the Pump ran, then you know it experienced some other sort of error and could not complete the indicated step.</p>
+
+<p>The execution of an example  with five <em>Action Steps</em> and <em>Complete</em> and <em>Incomplete</em> set to 27 and 4 respectively would produce a result log file like this:</p>
+
+<pre><code>Task#1 uses the module "MinimalModuleExample".
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Processing task #1
+Task parameters found in range "A4:B5".
+    #1 Skipping "chkTask"!
+    #2 Skipping "chkTask"!
+    #3 Doing "chkTask" now.
+Task check for key "first_parm" found : "dummy"!
+__
+    #4 Skipping "chkTask"!
+    #5 Skipping "chkTask"!
+</code></pre>
+
+<p>Notes</p>
+
+<hr><p>Some useful documentation:</p>
+
+<ul>
+<li>for the db service:
+
+<ul>
+<li><a href="http://pythonhosted.org/OERPLib/tutorials.html">http://pythonhosted.org/OERPLib/tutorials.html</a></li>
+<li><a href="http://pythonhosted.org/OERPLib/ref_db.html#oerplib.service.db.DB">http://pythonhosted.org/OERPLib/ref_db.html#oerplib.service.db.DB</a></li>
+</ul>
+</li>
+</ul>
+        </section>
+
+        <footer>
+          Gdata openerp data pump is maintained by <a href="https://github.com/martinhbramwell">martinhbramwell</a><br>
+          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="http://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
+
+        
+      </div>
+    </div>
+  </body>
+</html>
