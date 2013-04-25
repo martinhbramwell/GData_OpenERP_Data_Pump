@@ -79,7 +79,7 @@ class OErpModel(object):
         
     def process(self, wrksht, rowTask):
     
-        print 'Processing task #' + str(rowTask - 1)
+        print 'Processing row #{} from "Task" sheet'.format(rowTask + 1)
         self.currentRow = rowTask
         
         self.shtTasks = wrksht.worksheet("Tasks")
@@ -128,7 +128,7 @@ class OErpModel(object):
         err  = ((maskedToDo != maskedDone))
 
         if err:
-            print 'Prior error blocks execution! '
+            print 'Prior error blocks execution!                                                              *   *   *   *   *   *   *   *   *'
             todo = False
 
         # print 'Do              : ' + str(todo)
@@ -203,7 +203,8 @@ class OErpModel(object):
         
         data = self.groupToArray(numCols, [cell.value for cell in wksht.range(parms['data_range'])])
         print ' - - -  data  - - - '
-        print data
+        for item in data:
+            print str(item)[:80]
 
 #        for idx in range(4):
 #            print data[idx]
@@ -211,7 +212,7 @@ class OErpModel(object):
         user_model = self.openErpConnection.get_model(model)
         user_model.load(fields, data)
 
-        print 'Done in OErpModel'
+#        print 'Done in OErpModel'
         
     def parseSpecial(self, special):
         spec = special.lower()
