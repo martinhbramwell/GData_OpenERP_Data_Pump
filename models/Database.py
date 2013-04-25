@@ -58,7 +58,7 @@ class Database(OErpModel):
         print 'Services : {0}'.format(db_service.list())
         if not db_service.db_exist(db):
             # none threading as we rely on the db further on
-            print 'Will create database "{}" now; with user pwd "{}", master pwd "{}" and context "{}"'.format(db, pwd, pwdSuper, context)
+            print 'Will create database "{}" now; with user pwd "{}", and context "{}"'.format(db, pwd, context)
             db_service.create_database(pwdSuper, db, False, context, pwd)
         else:
             print 'Using existing database "{0}"'.format(db) 
