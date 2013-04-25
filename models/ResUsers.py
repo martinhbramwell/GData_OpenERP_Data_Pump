@@ -47,13 +47,6 @@ class ResUsers(OErpModel):
             pass
 
         # print ' #   #   #   #   #   #   #   #   #   #  \n'
-
-    def chkTask(self, parms):
-        print 'Task check . . . '
-        for key  in parms:
-            if key not in ("ResUsers", "login"):
-                print "Key : " + key + "  Parm : "
-                print OErpModel.parseSpecial(self, parms[key])
     
     
     def update(self, parms):
@@ -80,15 +73,10 @@ class ResUsers(OErpModel):
         data = super(ResUsers, self).load(parms, OPENERP_MODULE_NAME)
 #        print 'Done in ResUsers!'
 
-'''
-XMLRPC: how to find inactive user?
 
-I'm using OpenERP V7 on Ubuntu 12.04 with Python 2.7.3
-
-For XMLRPC connections I use [openerplib](https://pypi.python.org/pypi/openerp-client-lib/1.0.0)
-
-I deactivated a user with :
-
-    thisUser = user_model.search([("login", "=", "billybob")])[0]
-    user_model.write(thisUser, {'active':False})
-'''
+    def chkTask(self, parms):
+        print 'Task check . . . '
+        for key  in parms:
+            if key not in ("ResUsers", "login"):
+                print "Key : " + key + "  Parm : "
+                print OErpModel.parseSpecial(self, parms[key])
