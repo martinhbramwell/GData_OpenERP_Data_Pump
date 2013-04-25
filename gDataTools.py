@@ -4,6 +4,9 @@
 Created on 2013-03-19
 
 @author: Martin H. Bramwell
+
+The editor bug fix :   fromdos gDataTools.py  && sudo chown -R www-data:www-data /var/www/hasan/GData_OpenERP_Data_Pump
+
 '''
 
 import argparse
@@ -17,26 +20,31 @@ from peak.util.imports import lazyModule
 
 connection = None
 
-def dispatchTasks(wkbk):
+def dispatchTasks(wkbk, start_row):
+
+    min_row = 0
+    if start_row != None:  min_row = int(start_row) - 2
 
     shtTasks = wkbk.worksheet("Tasks")
     namesTasks = shtTasks.col_values(1)
     
     # Having the name of each handler, dispatch to them
+    print 'Start work at spreadsheet row "{}" to Google.'.format(start_row)
     for row, task in enumerate(namesTasks):
-        if row > 1:
-            print '\n\nTask#{} uses the module "{}".'.format(row - 1, task)
-            print '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
+        # print 'Row is #{}/{} '.format(row,min_row)
+        if row > min_row:
+            if task not in ("Model Class", "", None):
+                print '\n\nTask#{} uses the module "{}".'.format(row + 1, task)
+                print '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
+    
+                getattr(lazyModule('models.' + task), task)().process(wkbk, row)  
 
-            getattr(lazyModule('models.' + task), task)().process(wkbk, row)  
     return
 
-def login():
+def login(credentials):
     
     gc = {}
     
-    credentials = creds.get()
-
     # Get Google uid/pwd from ~/.gdataCreds  a file in the format
     #      {"user_id": "yourGoogleUID", "user_pwd": "yourGoogleUID"}
 
@@ -68,13 +76,13 @@ def getPumpCredentials(wkbk):
     
     creds = {t[0]:t[1] for t in lstlstCreds}
 
-
     return creds
 
 
 def main():
 
-    google_connection = login()
+    credentials = creds.get()
+    google_connection = login(credentials)
 
     if google_connection is not None:
         if google_connection['connection'] is not None:
@@ -86,7 +94,7 @@ def main():
             OErpModel.pumpCredentials = getPumpCredentials(wkbk)
             OErpModel.openErpConnection = openerp_utils.connect(OErpModel.pumpCredentials)
 			
-            dispatchTasks(wkbk)
+            dispatchTasks(wkbk, credentials['row'])
 
     print ''
 
