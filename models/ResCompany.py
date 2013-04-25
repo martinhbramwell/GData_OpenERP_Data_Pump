@@ -16,6 +16,7 @@ class ResCompany(OErpModel):
         
         self.methods = {
               'chkTask': self.chkTask
+            , 'load': self.load
         }
 
 
@@ -44,3 +45,9 @@ class ResCompany(OErpModel):
         print 'Task check for key "docs_key" found : "' + parms['docs_key'] + '"!'
         print 'Task check for key "docs_sheet" found : "' + parms['docs_sheet'] + '"!'
 
+
+    def load(self, parms):
+        print 'Calling parent to load to "{}".'.format(OPENERP_MODULE_NAME)
+
+        data = super(ResCompany, self).load(parms, OPENERP_MODULE_NAME)
+        print 'Done in ResCompany!'
