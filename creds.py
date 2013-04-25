@@ -18,12 +18,15 @@ allow_to_overwrite_prior_credentials = True
 NONE = -1
 USER_ID = NONE + 1
 USER_PWD = USER_ID + 1
+START_ROW = USER_PWD + 1
+
 SHORT = NONE + 1
 LONG = SHORT + 1
 HELP = LONG + 1
 switches = [
               ['u', '--user_id', 'Name of the connecting user.']
             , ['p', '--user_pwd', 'Password of the connecting user.']
+            , ['r', '--start_row', 'Row in Tasks sheet at which to start processing .']
            ]
 
 class InputError(Exception):
@@ -67,6 +70,7 @@ def get():
     #credentials['user_pwd'] = None
     
     parser = argparse.ArgumentParser(description='Helper to initialize Google uid/pwd logins')
+    parser.add_argument('-' + switches[START_ROW][SHORT], switches[START_ROW][LONG], help = switches[START_ROW][HELP])
     parser.add_argument('-' + switches[USER_PWD][SHORT], switches[USER_PWD][LONG], help = switches[USER_PWD][HELP])
     parser.add_argument('-' + switches[USER_ID][SHORT], switches[USER_ID][LONG], help = switches[USER_ID][HELP])
     
@@ -108,6 +112,7 @@ def get():
                 allow_to_overwrite_prior_credentials = False
     
     credentials['key'] = args.key
+    credentials['row'] = args.start_row
     return credentials
 
 
