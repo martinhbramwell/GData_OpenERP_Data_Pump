@@ -1,11 +1,30 @@
 #!/usr/bin/env python 
 # -*- coding: utf-8 -*-
 '''
-Created on 2013-03-19
 
-@author: Martin H. Bramwell
+   The full program is explained here:  http://martinhbramwell.github.io/GData_OpenERP_Data_Pump
 
-The editor bug fix :   fromdos gDataTools.py  && sudo chown -R www-data:www-data /var/www/hasan/GData_OpenERP_Data_Pump
+    Copyright (C) 2013 warehouseman.com
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+    Created on 2013-03-19
+
+    @author: Martin H. Bramwell
+
+    This module:
+       This module is the main entry point for running the GData_OpenERP_Data_Pump
 
 '''
 
