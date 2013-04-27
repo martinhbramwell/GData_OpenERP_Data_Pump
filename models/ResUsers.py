@@ -51,21 +51,24 @@ class ResUsers(OErpModel):
     
     def update(self, parms):
                
+        # Will update the OpenERP model 'res.user'
         user_model = OErpModel.openErpConnection.get_model(OPENERP_MODULE_NAME)
 
+        # Obtain an array of record ids that match the selection criteria (only one in this case)
         thisUser = user_model.search([("login", "=", parms['login'])])[0]
+
+        # Read the existing data (only what we need)
         nameUser = user_model.read(thisUser, ["name"])["name"]
         print "Login " + parms['login'] + " -- " + nameUser
 
-        user_info = user_model.read(thisUser, ["in_group_4", "in_group_6", "tz", "active"])
-
+        # Write it back out with update applied
         for key  in parms:
-            if key not in ("ResUsers", "login"):  
+            if key not in ("ResUsers", "login"):    # Ignore the record key attribute
                 val = OErpModel.parseSpecial(self, parms[key]) 
-                print "What ? " + str(val)
-                print 'Writing : (thisUser, "{}":"{}") from "{}"'.format(key, val, parms[key])
+                print 'Writing : (User : {}, "{}":"{}") from "{}"'.format(nameUser, key, val, parms[key])
                 user_model.write(thisUser, {key:val})
-                print 'Wrote : (thisUser, {}:{}) from "{}"'.format(key, val, parms[key])
+                print 'Written'
+
 
     def load(self, parms):
         print 'Calling parent to load to "{}".'.format(OPENERP_MODULE_NAME)

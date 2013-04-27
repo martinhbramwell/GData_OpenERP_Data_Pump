@@ -1,4 +1,3 @@
-
 GData OpenERP Data Pump
 =======================
 
@@ -169,17 +168,23 @@ The class in [ResUsers.py](https://github.com/martinhbramwell/GData_OpenERP_Data
 
     def update(self, parms):
                
-        # Loading to the OpenERP model 'res.user'
+        # Will update the OpenERP model 'res.user'
         user_model = OErpModel.openErpConnection.get_model(OPENERP_MODULE_NAME)
 
         # Obtain an array of record ids that match the selection criteria (only one in this case)
-        ids = user_model.search([("login", "=", "admin")])
+        thisUser = user_model.search([("login", "=", parms['login'])])[0]
 
         # Read the existing data (only what we need)
-        user_info = user_model.read(ids[0], ["name", "tz"])
+        nameUser = user_model.read(thisUser, ["name"])["name"]
+        print "Login " + parms['login'] + " -- " + nameUser
 
         # Write it back out with update applied
-        user_model.write(ids[0], {"tz":parms['tz']})
+        for key  in parms:
+            if key not in ("ResUsers", "login"):    # Ignore the record key attribute
+                val = OErpModel.parseSpecial(self, parms[key]) 
+                print 'Writing : (User : {}, "{}":"{}") from "{}"'.format(nameUser, key, val, parms[key])
+                user_model.write(thisUser, {key:val})
+                print 'Written'
 
 
 
