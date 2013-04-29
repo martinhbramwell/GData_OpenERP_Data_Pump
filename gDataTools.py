@@ -28,6 +28,7 @@
 
 '''
 
+
 import argparse
 import creds
 import gspread
@@ -42,23 +43,31 @@ connection = None
 def dispatchTasks(wkbk, start_row):
 
     min_row = 0
-    if start_row != None:  min_row = int(start_row) - 2
+    if start_row == None:
+        min_row = 2
+    else:
+        min_row = int(start_row) - 2
 
     shtTasks = wkbk.worksheet("Tasks")
     namesTasks = shtTasks.col_values(1)
+    stateTasks = shtTasks.col_values(4)
     
     # Having the name of each handler, dispatch to them
-    print 'Start work at spreadsheet row "{}" to Google.'.format(start_row)
+    print 'Start work at row #{} in the "Tasks" sheet.'.format(min_row + 2)
+    complete = 0
     for row, task in enumerate(namesTasks):
         # print 'Row is #{}/{} '.format(row,min_row)
+        # print 'Task #{} has {} to do.'.format(row+1,stateTasks[row])
         if row > min_row:
-            if task not in ("Model Class", "", None):
-                print '\n\nTask#{} uses the module "{}".'.format(row + 1, task)
-                print '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
-    
-                getattr(lazyModule('models.' + task), task)().process(wkbk, row)  
-
+            if task not in ("Model Class", "", None) and int(stateTasks[row]) > 0:
+                    print '\n\nTask#{} uses the module "{}".'.format(row + 1, task)
+                    print '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
+        
+                    getattr(lazyModule('models.' + task), task)().process(wkbk, row)
+                    complete += 1
+    print 'Found {} tasks to process.'.format(complete)
     return
+
 
 def login(credentials):
     
@@ -108,6 +117,7 @@ def main():
 
             OErpModel.gDataConnection = google_connection['connection']
 
+            print 'Workbook : {}'.format(google_connection['workbook_key'])
             wkbk = OErpModel.gDataConnection.open_by_key(google_connection['workbook_key'])
 
             OErpModel.pumpCredentials = getPumpCredentials(wkbk)
