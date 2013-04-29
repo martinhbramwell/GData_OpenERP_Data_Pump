@@ -25,16 +25,16 @@ The overall action is a dispatcher within a dispatcher; the outer dispatcher ins
 
 __Currently Available Tasks__
 
-database 		: create database
-ir.module.module 	: install_module
-base.language.install	: install language
-res.users 		: update record, bulk load
-res.country.state	: bulk load
-res.partner.category	: bulk load
-res.partner		: bulk load company, bulk load person
-res.bank		: bulk load
-res.company		: bulk load
-
+- database 		: create database
+- ir.module.module 	: install_module
+- base.language.install	: install language
+- res.users 		: update record, bulk load
+- res.country.state	: bulk load
+- res.partner.category	: bulk load
+- res.partner		: bulk load company, bulk load person
+- res.bank		: bulk load
+- res.company		: bulk load
+ 
 __Main Steps__
 
 In more detail, the action is:
