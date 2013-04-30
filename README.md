@@ -247,7 +247,8 @@ Some useful documentation:
 - for the db service:
   - [http://pythonhosted.org/OERPLib/tutorials.html](http://pythonhosted.org/OERPLib/tutorials.html)
   - [http://pythonhosted.org/OERPLib/ref_db.html#oerplib.service.db.DB](http://pythonhosted.org/OERPLib/ref_db.html#oerplib.service.db.DB)
-
+- for other Google & OpenERP connectivity
+  - [http://www.youtube.com/playlist?p=PLq7op4J183lX44ZlXPiHxUpRvmmRDtxye](http://www.youtube.com/playlist?p=PLq7op4J183lX44ZlXPiHxUpRvmmRDtxye)
 ----
 http://martinhbramwell.github.io/GData_OpenERP_Data_Pump
 
