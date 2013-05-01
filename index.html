@@ -32,6 +32,45 @@
       <section>
         <h1>GData OpenERP Data Pump</h1>
 
+<p><a name="Contents"></a></p>
+
+<h3>Contents</h3>
+
+<h4><a href="#Introduction">Introduction</a></h4>
+
+<h5>- <a href="#Currently%20Available%20Tasks">Currently Available Tasks</a>
+</h5>
+
+<h5>- <a href="#Main%20Steps">Main Steps</a>
+</h5>
+
+<h4><a href="#First%20time%20execution">First time execution</a></h4>
+
+<h4><a href="#Minimal%20Module%20Example">Minimal Module Example</a></h4>
+
+<h4><a href="#Model%20Sheets">Model Sheets</a></h4>
+
+<h5>- <a href="#ResCountryState%20example">ResCountryState example</a>
+</h5>
+
+<h5>- <a href="#ResUsers%20example">ResUsers example</a>
+</h5>
+
+<h4><a href="#Repeat%20executions">Repeat executions</a></h4>
+
+<h4><a href="#Notes">Notes</a></h4>
+
+<h5>- <a href="#Some%20useful%20documentation">Some useful documentation</a>
+</h5>
+
+<h5>- <a href="#Link%20to%20home%20site">Link to home site</a>
+</h5>
+
+<h5>- <a href="#Credits">Credits</a>
+</h5>
+
+<hr><p><a name="Introduction"></a></p>
+
 <h2>Introduction</h2>
 
 <p>A very simple tool for feeding Google Spreadsheet data into the XMLRPC channel of OpenERP V7.</p>
@@ -57,7 +96,11 @@
 
 <p>The overall action is a dispatcher within a dispatcher; the outer dispatcher instantiates classes named in column A of the <em>tasks</em> sheet while the inner dispatcher calls the <em>methods</em> of the class that have been named in the <em>Action Step</em> cells of the same row.</p>
 
-<p><strong>Currently Available Tasks</strong></p>
+<p><a href="#Contents">Top</a></p>
+
+<p><a name="Currently%20Available%20Tasks"></a></p>
+
+<h5>Currently Available Tasks</h5>
 
 <ul>
 <li>database      : create database</li>
@@ -69,7 +112,9 @@
 <li>res.partner       : bulk load company, bulk load person</li>
 <li>res.bank      : bulk load</li>
 <li>res.company       : bulk load</li>
-</ul><p><strong>Main Steps</strong></p>
+</ul><p><a name="Main%20Steps"></a></p>
+
+<h5>Main Steps</h5>
 
 <p>In more detail, the action is:</p>
 
@@ -87,16 +132,11 @@
 <li>repeat for each <em>Model Class</em> </li>
 </ol><p>The remote procedures you can call are documented here : <a href="http://doc.openerp.com/trunk/developers/server/api_models/">ORM and models</a></p>
 
-<p><strong>Credits</strong> : </p>
+<p><a href="#Contents">Top</a></p>
 
-<ol>
-<li>Some ideas pilfered from here <a href="https://gist.github.com/t3dev/3016471">https://gist.github.com/t3dev/3016471</a>
-</li>
-<li>Code developed and run on a ´KVM 7´ from the <strong>so_great_you_cannot_believe_it</strong> VPS service of <a href="https://www.prometeus.net/billing/cart.php?gid=13">https://www.prometeus.net/billing/cart.php?gid=13</a>
-</li>
-<li>Editing done through the <strong>really cool</strong> browser based IDE <a href="https://github.com/mattpass/ICEcoder">https://github.com/mattpass/ICEcoder</a>
-</li>
-</ol><h2>First time execution</h2>
+<p><a name="First%20time%20execution"></a></p>
+
+<h2>First time execution</h2>
 
 <p>You will need to install the earlier mentioned third party tools:</p>
 
@@ -142,6 +182,10 @@ gDataTools.py: error: too few arguments
 
 <p>See the section <em>Repeat Execution</em> below to learn how to get fine grained control of which <em>Action Steps</em> are executed or skipped.</p>
 
+<p><a href="#Contents">Top</a></p>
+
+<p><a name="Minimal%20Module%20Example"></a></p>
+
 <h2>Minimal Module Example</h2>
 
 <p>There is a <a href="https://github.com/martinhbramwell/GData_OpenERP_Data_Pump/blob/master/models/MinimalModuleExample.py">minimal example</a> with a single method, in GitHub, which the <a href="https://docs.google.com/spreadsheet/ccc?key=0AiVG6SoU001RdFdyc1NxOHN4eWZ6Q0lLMHVyWUpkaHc">OpenErpGDataController</a> example uses.</p>
@@ -167,15 +211,23 @@ gDataTools.py: error: too few arguments
 </li>
 <li>Every new method you create (similar to <code>def chkTask(self, parms):</code>) must have an entry in the dictionary <code>self.methods</code> that is initialized in the <code>__init__(self)</code> method and used in the line <code>self.methods[aMethod](self.parameters)</code>
 </li>
-</ul><h2>Model Sheets</h2>
+</ul><p><a href="#Contents">Top</a></p>
 
-<p>Based on the pattern of loading name/value pairs into a dictionary, and passing the dictionary to a method, there is really no limit to what the called method can be made to do.</p>
+<p><a name="Model%20Sheets"></a></p>
+
+<h2>Model Sheets</h2>
+
+<hr><p>Based on the pattern of loading name/value pairs into a dictionary, and passing the dictionary to a method, there is really no limit to what the called method can be made to do.</p>
 
 <p>Note: The <em>parms</em> sheet and Python code could be made more intelligent about deriving row and column ranges from source data sheets.  Rightly or wrongly, I decided that it was wise to leave that responsibility with users. </p>
 
-<p><strong>ResCountryState example</strong></p>
+<p><a href="#Contents">Top</a></p>
 
-<hr><p><a href="https://github.com/martinhbramwell/GData_OpenERP_Data_Pump/blob/master/models/ResCountryState.py">ResCountryState.py</a> provides a complete example of a high speed data load operation. The goal is to collect the correct data for the <code>openerplib</code> command <code>user_model.load(fields, data)</code>.</p>
+<p><a name="ResCountryState%20example"></a></p>
+
+<h3>ResCountryState example</h3>
+
+<p><a href="https://github.com/martinhbramwell/GData_OpenERP_Data_Pump/blob/master/models/ResCountryState.py">ResCountryState.py</a> provides a complete example of a high speed data load operation. The goal is to collect the correct data for the <code>openerplib</code> command <code>user_model.load(fields, data)</code>.</p>
 
 <p>In the <em>tasks</em> sheet, of <a href="https://docs.google.com/spreadsheet/ccc?key=0AiVG6SoU001RdFdyc1NxOHN4eWZ6Q0lLMHVyWUpkaHc">OpenErpGDataController</a>, the row containing the class name <code>ResCountryState</code> provides the method to be called (<code>load</code>) and the range in the <em>parms</em> sheet where the parameters for <code>load</code> can be found.  In the <em>tasks</em> sheet, the row containing the class name <code>ResCountryState</code> provides the key names, and the following row provides the values, to be added to the dictionary that will be passed to <code>load</code>.</p>
 
@@ -216,9 +268,13 @@ gDataTools.py: error: too few arguments
     user_model.load(fields, data)
 </code></pre>
 
-<p><strong>ResUsers example</strong></p>
+<p><a href="#Contents">Top</a></p>
 
-<hr><p>The class in <a href="https://github.com/martinhbramwell/GData_OpenERP_Data_Pump/blob/master/models/ResUsers.py">ResUsers.py</a> shows a simple update of a single model record.  It has no need to pull lots of data, so the <em>parms</em> page can provide what is needed directly.</p>
+<p><a name="ResUsers%20example"></a></p>
+
+<h3>ResUsers example</h3>
+
+<p>The class in <a href="https://github.com/martinhbramwell/GData_OpenERP_Data_Pump/blob/master/models/ResUsers.py">ResUsers.py</a> shows a simple update of a single model record.  It has no need to pull lots of data, so the <em>parms</em> page can provide what is needed directly.</p>
 
 <pre><code>def update(self, parms):
 
@@ -240,6 +296,10 @@ gDataTools.py: error: too few arguments
             user_model.write(thisUser, {key:val})
             print 'Written'
 </code></pre>
+
+<p><a href="#Contents">Top</a></p>
+
+<p><a name="Repeat%20executions"></a></p>
 
 <h2>Repeat executions</h2>
 
@@ -275,9 +335,15 @@ __
     #5 Skipping "chkTask"!
 </code></pre>
 
-<p>Notes</p>
+<p><a href="#Contents">Top</a></p>
 
-<hr><p>Some useful documentation:</p>
+<p><a name="Notes"></a></p>
+
+<h2>Notes</h2>
+
+<p><a name="Some%20useful%20documentation"></a></p>
+
+<h3>Some useful documentation</h3>
 
 <ul>
 <li>for the db service:
@@ -293,7 +359,24 @@ __
 <li><a href="http://www.youtube.com/playlist?p=PLq7op4J183lX44ZlXPiHxUpRvmmRDtxye">http://www.youtube.com/playlist?p=PLq7op4J183lX44ZlXPiHxUpRvmmRDtxye</a></li>
 </ul>
 </li>
-</ul><hr><p><a href="http://martinhbramwell.github.io/GData_OpenERP_Data_Pump">http://martinhbramwell.github.io/GData_OpenERP_Data_Pump</a></p>
+</ul><p><a name="Link%20to%20home%20site"></a></p>
+
+<h3>Link to home site</h3>
+
+<p><a href="http://martinhbramwell.github.io/GData_OpenERP_Data_Pump">http://martinhbramwell.github.io/GData_OpenERP_Data_Pump</a></p>
+
+<p><a name="Credits"></a></p>
+
+<h3>Credits</h3>
+
+<ol>
+<li>Some ideas pilfered from here <a href="https://gist.github.com/t3dev/3016471">https://gist.github.com/t3dev/3016471</a>
+</li>
+<li>Code developed and run on a ´KVM 7´ from the <strong>so_great_you_cannot_believe_it</strong> VPS service of <a href="https://www.prometeus.net/billing/cart.php?gid=13">https://www.prometeus.net/billing/cart.php?gid=13</a>
+</li>
+<li>Editing done through the <strong>really cool</strong> browser based IDE <a href="https://github.com/mattpass/ICEcoder">https://github.com/mattpass/ICEcoder</a>
+</li>
+</ol><p><a href="#Contents">Top</a></p>
       </section>
       <footer>
         <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
