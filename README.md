@@ -3,15 +3,21 @@ GData OpenERP Data Pump
 
 -----
 
-## Table of Contents
+### Contents
 ### [Introduction](#Introduction)
 #### - [Currently Available Tasks](#Currently Available Tasks)
 #### - [Main Steps](#Main Steps)
 #### - [Credits](#Credits)
+
 ### [First time execution](#First time execution)
 ### [Minimal Module Example](#Minimal Module Example)
+### [Model Sheets](#Model Sheets)
+#### - [ResCountryState example](#ResCountryState example)
+
+<a name=""/>
 
 
+<a name="Introduction"/>
 ## Introduction
 
 A very simple tool for feeding Google Spreadsheet data into the XMLRPC channel of OpenERP V7.
@@ -139,7 +145,7 @@ The customization steps are:
 
 
 
-Model Sheets
+## Model Sheets
 ------------
 
 Based on the pattern of loading name/value pairs into a dictionary, and passing the dictionary to a method, there is really no limit to what the called method can be made to do.
@@ -147,8 +153,7 @@ Based on the pattern of loading name/value pairs into a dictionary, and passing 
 Note: The *parms* sheet and Python code could be made more intelligent about deriving row and column ranges from source data sheets.  Rightly or wrongly, I decided that it was wise to leave that responsibility with users. 
 
 
-**ResCountryState example**
-- - - - - - - - - - - - - 
+### ResCountryState example
 
 [ResCountryState.py](https://github.com/martinhbramwell/GData_OpenERP_Data_Pump/blob/master/models/ResCountryState.py) provides a complete example of a high speed data load operation. The goal is to collect the correct data for the `openerplib` command `user_model.load(fields, data)`.
 
