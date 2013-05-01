@@ -1,20 +1,24 @@
 GData OpenERP Data Pump
 =======================
 
------
-
 ### Contents
-[Introduction](#Introduction :)
-- [Currently Available Tasks](#Currently Available Tasks)
-#### - [Main Steps](#Main Steps)
-#### - [Credits](#Credits)
+#### [Introduction](#Introduction :)
+##### - [Currently Available Tasks](#Currently Available Tasks)
+##### - [Main Steps](#Main Steps)
+#### [First time execution](#First time execution)
+#### [Minimal Module Example](#Minimal Module Example)
+#### [Model Sheets](#Model Sheets :)
+##### - [ResCountryState example](#ResCountryState example)
+##### - [ResUsers example](#ResUsers example)
+#### [Repeat executions](#Repeat executions)
+#### [Notes](#Notes)
+##### - [Some useful documentation](Some useful documentation)
+##### - [Link to home site](Link to home site)
+##### - [Credits](#Credits)
 
-### [First time execution](#First time execution)
-[Minimal Module Example](#Minimal Module Example)
-### [Model Sheets](#Model Sheets :)
-#### - [ResCountryState example](#ResCountryState example)
-
-## Introduction :
+- - - - - - - - - - - - -
+<a name="Introduction"/>
+## Introduction
 
 A very simple tool for feeding Google Spreadsheet data into the XMLRPC channel of OpenERP V7.
 
@@ -35,6 +39,7 @@ There is a sample controller ([OpenErpGDataController](https://docs.google.com/s
 
 The overall action is a dispatcher within a dispatcher; the outer dispatcher instantiates classes named in column A of the *tasks* sheet while the inner dispatcher calls the _methods_ of the class that have been named in the *Action Step* cells of the same row.
 
+<a name="Currently Available Tasks"/>
 ##### Currently Available Tasks
 
 - database 		: create database
@@ -47,6 +52,7 @@ The overall action is a dispatcher within a dispatcher; the outer dispatcher ins
 - res.bank		: bulk load
 - res.company		: bulk load
  
+<a name="Main Steps"/>
 ##### Main Steps
 
 In more detail, the action is:
@@ -65,13 +71,7 @@ In more detail, the action is:
 
 The remote procedures you can call are documented here : [ORM and models](http://doc.openerp.com/trunk/developers/server/api_models/)
 
-##### Credits 
-
-1. Some ideas pilfered from here [https://gist.github.com/t3dev/3016471](https://gist.github.com/t3dev/3016471)
-2. Code developed and run on a ´KVM 7´ from the **so_great_you_cannot_believe_it** VPS service of [https://www.prometeus.net/billing/cart.php?gid=13](https://www.prometeus.net/billing/cart.php?gid=13)
-3. Editing done through the **really cool** browser based IDE [https://github.com/mattpass/ICEcoder](https://github.com/mattpass/ICEcoder)
-
-
+<a name="First time execution"/>
 ## First time execution
 
 
@@ -114,6 +114,7 @@ When that file exists the command line can be, simply . . .
     
 See the section *Repeat Execution* below to learn how to get fine grained control of which *Action Steps* are executed or skipped.
 
+<a name="Minimal Module Example"/>
 ## Minimal Module Example
 
 
@@ -141,7 +142,8 @@ The customization steps are:
 
 
 
-## Model Sheets :
+<a name="Model Sheets"/>
+## Model Sheets
 ------------
 
 Based on the pattern of loading name/value pairs into a dictionary, and passing the dictionary to a method, there is really no limit to what the called method can be made to do.
@@ -149,6 +151,7 @@ Based on the pattern of loading name/value pairs into a dictionary, and passing 
 Note: The *parms* sheet and Python code could be made more intelligent about deriving row and column ranges from source data sheets.  Rightly or wrongly, I decided that it was wise to leave that responsibility with users. 
 
 
+<a name="ResCountryState example"/>
 ### ResCountryState example
 
 [ResCountryState.py](https://github.com/martinhbramwell/GData_OpenERP_Data_Pump/blob/master/models/ResCountryState.py) provides a complete example of a high speed data load operation. The goal is to collect the correct data for the `openerplib` command `user_model.load(fields, data)`.
@@ -189,8 +192,9 @@ The code is as follows :
         user_model.load(fields, data)
 
 
-**ResUsers example**
-- - - - - - - - - - - - - 
+<a name="ResUsers example"/>
+### ResUsers example
+
 
 The class in [ResUsers.py](https://github.com/martinhbramwell/GData_OpenERP_Data_Pump/blob/master/models/ResUsers.py) shows a simple update of a single model record.  It has no need to pull lots of data, so the *parms* page can provide what is needed directly.
 
@@ -217,8 +221,8 @@ The class in [ResUsers.py](https://github.com/martinhbramwell/GData_OpenERP_Data
 
 
 
-Repeat executions
---------------------
+<a name="Repeat executions"/>
+## Repeat executions
 
 In each child class of `OErpModel.py` there should be calls to the parent class methods, `starting` and `finished` just before and just after the call to an *Action Step*, like this:
 
@@ -250,10 +254,11 @@ The execution of an example  with five *Action Steps* and *Complete* and *Incomp
         #4 Skipping "chkTask"!
         #5 Skipping "chkTask"!
 
-Notes
-- - - - 
+<a name="Notes"/>
+## Notes
 
-Some useful documentation:
+<a name="Some useful documentation"/>
+### Some useful documentation
 
 - for the db service:
   - [http://pythonhosted.org/OERPLib/tutorials.html](http://pythonhosted.org/OERPLib/tutorials.html)
@@ -261,7 +266,16 @@ Some useful documentation:
 - for other Google & OpenERP connectivity
   - [http://www.youtube.com/playlist?p=PLq7op4J183lX44ZlXPiHxUpRvmmRDtxye](http://www.youtube.com/playlist?p=PLq7op4J183lX44ZlXPiHxUpRvmmRDtxye)
 
-----
+<a name="Link to home site"/>
+### Link to home site
 http://martinhbramwell.github.io/GData_OpenERP_Data_Pump
+
+<a name="Credits"/>
+### Credits 
+
+1. Some ideas pilfered from here [https://gist.github.com/t3dev/3016471](https://gist.github.com/t3dev/3016471)
+2. Code developed and run on a ´KVM 7´ from the **so_great_you_cannot_believe_it** VPS service of [https://www.prometeus.net/billing/cart.php?gid=13](https://www.prometeus.net/billing/cart.php?gid=13)
+3. Editing done through the **really cool** browser based IDE [https://github.com/mattpass/ICEcoder](https://github.com/mattpass/ICEcoder)
+
 
 
