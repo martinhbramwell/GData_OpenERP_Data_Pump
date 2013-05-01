@@ -2,18 +2,18 @@ GData OpenERP Data Pump
 =======================
 
 ### Contents
-#### [Introduction](#Introduction :)
+#### [Introduction](#Introduction)
 ##### - [Currently Available Tasks](#Currently Available Tasks)
 ##### - [Main Steps](#Main Steps)
 #### [First time execution](#First time execution)
 #### [Minimal Module Example](#Minimal Module Example)
-#### [Model Sheets](#Model Sheets :)
+#### [Model Sheets](#Model Sheets)
 ##### - [ResCountryState example](#ResCountryState example)
 ##### - [ResUsers example](#ResUsers example)
 #### [Repeat executions](#Repeat executions)
 #### [Notes](#Notes)
-##### - [Some useful documentation](Some useful documentation)
-##### - [Link to home site](Link to home site)
+##### - [Some useful documentation](#Some useful documentation)
+##### - [Link to home site](#Link to home site)
 ##### - [Credits](#Credits)
 
 - - - - - - - - - - - - -
