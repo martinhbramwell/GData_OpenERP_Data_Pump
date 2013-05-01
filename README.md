@@ -1,8 +1,18 @@
 GData OpenERP Data Pump
 =======================
 
-Introduction
-------------
+-----
+
+## Table of Contents
+### [Introduction](#Introduction)
+#### - [Currently Available Tasks](#Currently Available Tasks)
+#### - [Main Steps](#Main Steps)
+#### - [Credits](#Credits)
+### [First time execution](#First time execution)
+### [Minimal Module Example](#Minimal Module Example)
+
+
+## Introduction
 
 A very simple tool for feeding Google Spreadsheet data into the XMLRPC channel of OpenERP V7.
 
@@ -23,7 +33,7 @@ There is a sample controller ([OpenErpGDataController](https://docs.google.com/s
 
 The overall action is a dispatcher within a dispatcher; the outer dispatcher instantiates classes named in column A of the *tasks* sheet while the inner dispatcher calls the _methods_ of the class that have been named in the *Action Step* cells of the same row.
 
-__Currently Available Tasks__
+##### Currently Available Tasks
 
 - database 		: create database
 - ir.module.module 	: install_module
@@ -35,7 +45,7 @@ __Currently Available Tasks__
 - res.bank		: bulk load
 - res.company		: bulk load
  
-__Main Steps__
+##### Main Steps
 
 In more detail, the action is:
 
@@ -53,15 +63,15 @@ In more detail, the action is:
 
 The remote procedures you can call are documented here : [ORM and models](http://doc.openerp.com/trunk/developers/server/api_models/)
 
-__Credits__ : 
+##### Credits 
 
 1. Some ideas pilfered from here [https://gist.github.com/t3dev/3016471](https://gist.github.com/t3dev/3016471)
 2. Code developed and run on a ´KVM 7´ from the **so_great_you_cannot_believe_it** VPS service of [https://www.prometeus.net/billing/cart.php?gid=13](https://www.prometeus.net/billing/cart.php?gid=13)
 3. Editing done through the **really cool** browser based IDE [https://github.com/mattpass/ICEcoder](https://github.com/mattpass/ICEcoder)
 
 
-First time execution
---------------------
+## First time execution
+
 
 You will need to install the earlier mentioned third party tools:
 
@@ -102,8 +112,8 @@ When that file exists the command line can be, simply . . .
     
 See the section *Repeat Execution* below to learn how to get fine grained control of which *Action Steps* are executed or skipped.
 
-Minimal Module Example
-----------------------
+## Minimal Module Example
+
 
 There is a [minimal example](https://github.com/martinhbramwell/GData_OpenERP_Data_Pump/blob/master/models/MinimalModuleExample.py) with a single method, in GitHub, which the [OpenErpGDataController](https://docs.google.com/spreadsheet/ccc?key=0AiVG6SoU001RdFdyc1NxOHN4eWZ6Q0lLMHVyWUpkaHc) example uses.
 
