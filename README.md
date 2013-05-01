@@ -40,6 +40,10 @@ There is a sample controller ([OpenErpGDataController](https://docs.google.com/s
 
 The overall action is a dispatcher within a dispatcher; the outer dispatcher instantiates classes named in column A of the *tasks* sheet while the inner dispatcher calls the _methods_ of the class that have been named in the *Action Step* cells of the same row.
 
+[Top](#Contents)
+
+
+
 <a name="Currently Available Tasks"/>
 ##### Currently Available Tasks
 
@@ -71,6 +75,10 @@ In more detail, the action is:
 1. repeat for each *Model Class* 
 
 The remote procedures you can call are documented here : [ORM and models](http://doc.openerp.com/trunk/developers/server/api_models/)
+
+[Top](#Contents)
+
+
 
 <a name="First time execution"/>
 ## First time execution
@@ -115,6 +123,11 @@ When that file exists the command line can be, simply . . .
     
 See the section *Repeat Execution* below to learn how to get fine grained control of which *Action Steps* are executed or skipped.
 
+[Top](#Contents)
+
+
+
+
 <a name="Minimal Module Example"/>
 ## Minimal Module Example
 
@@ -141,6 +154,8 @@ The customization steps are:
 - If you will be referring to a single OpenERP model, name it in the line beginning: `OPENERP_MODULE_NAME = `
 - Every new method you create (similar to `def chkTask(self, parms):`) must have an entry in the dictionary `self.methods` that is initialized in the `__init__(self)` method and used in the line `self.methods[aMethod](self.parameters)`
 
+[Top](#Contents)
+
 
 
 <a name="Model Sheets"/>
@@ -150,6 +165,9 @@ The customization steps are:
 Based on the pattern of loading name/value pairs into a dictionary, and passing the dictionary to a method, there is really no limit to what the called method can be made to do.
 
 Note: The *parms* sheet and Python code could be made more intelligent about deriving row and column ranges from source data sheets.  Rightly or wrongly, I decided that it was wise to leave that responsibility with users. 
+
+[Top](#Contents)
+
 
 
 <a name="ResCountryState example"/>
@@ -191,6 +209,10 @@ The code is as follows :
 
         # . . . and load it.
         user_model.load(fields, data)
+
+[Top](#Contents)
+
+
 
 
 <a name="ResUsers example"/>
