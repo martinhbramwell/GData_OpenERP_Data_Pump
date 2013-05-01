@@ -4,21 +4,17 @@ GData OpenERP Data Pump
 -----
 
 ### Contents
-### [Introduction](#Introduction)
+### [Introduction](#Introduction :)
 #### - [Currently Available Tasks](#Currently Available Tasks)
 #### - [Main Steps](#Main Steps)
 #### - [Credits](#Credits)
 
 ### [First time execution](#First time execution)
-### [Minimal Module Example](#Minimal Module Example)
-### [Model Sheets](#Model Sheets)
+### [Minimal Module Example](#Minimal Module Example.)
+### [Model Sheets](#Model Sheets :)
 #### - [ResCountryState example](#ResCountryState example)
 
-<a name=""/>
-
-
-<a name="Introduction"/>
-## Introduction
+## Introduction :
 
 A very simple tool for feeding Google Spreadsheet data into the XMLRPC channel of OpenERP V7.
 
@@ -118,7 +114,7 @@ When that file exists the command line can be, simply . . .
     
 See the section *Repeat Execution* below to learn how to get fine grained control of which *Action Steps* are executed or skipped.
 
-## Minimal Module Example
+## Minimal Module Example.
 
 
 There is a [minimal example](https://github.com/martinhbramwell/GData_OpenERP_Data_Pump/blob/master/models/MinimalModuleExample.py) with a single method, in GitHub, which the [OpenErpGDataController](https://docs.google.com/spreadsheet/ccc?key=0AiVG6SoU001RdFdyc1NxOHN4eWZ6Q0lLMHVyWUpkaHc) example uses.
@@ -145,7 +141,7 @@ The customization steps are:
 
 
 
-## Model Sheets
+## Model Sheets :
 ------------
 
 Based on the pattern of loading name/value pairs into a dictionary, and passing the dictionary to a method, there is really no limit to what the called method can be made to do.
