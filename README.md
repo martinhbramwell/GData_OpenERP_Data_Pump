@@ -1,6 +1,7 @@
 GData OpenERP Data Pump
 =======================
 
+<a name="Contents"/>
 ### Contents
 #### [Introduction](#Introduction)
 ##### - [Currently Available Tasks](#Currently Available Tasks)
@@ -218,6 +219,7 @@ The class in [ResUsers.py](https://github.com/martinhbramwell/GData_OpenERP_Data
                 user_model.write(thisUser, {key:val})
                 print 'Written'
 
+[Top](#Contents)
 
 
 
@@ -253,6 +255,8 @@ The execution of an example  with five *Action Steps* and *Complete* and *Incomp
     __
         #4 Skipping "chkTask"!
         #5 Skipping "chkTask"!
+[Top](#Contents)
+
 
 <a name="Notes"/>
 ## Notes
@@ -276,6 +280,8 @@ http://martinhbramwell.github.io/GData_OpenERP_Data_Pump
 1. Some ideas pilfered from here [https://gist.github.com/t3dev/3016471](https://gist.github.com/t3dev/3016471)
 2. Code developed and run on a ´KVM 7´ from the **so_great_you_cannot_believe_it** VPS service of [https://www.prometeus.net/billing/cart.php?gid=13](https://www.prometeus.net/billing/cart.php?gid=13)
 3. Editing done through the **really cool** browser based IDE [https://github.com/mattpass/ICEcoder](https://github.com/mattpass/ICEcoder)
+
+[Top](#Contents)
 
 
 
