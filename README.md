@@ -4,13 +4,13 @@ GData OpenERP Data Pump
 -----
 
 ### Contents
-### [Introduction](#Introduction :)
-#### - [Currently Available Tasks](#Currently Available Tasks)
+[Introduction](#Introduction :)
+- [Currently Available Tasks](#Currently Available Tasks)
 #### - [Main Steps](#Main Steps)
 #### - [Credits](#Credits)
 
 ### [First time execution](#First time execution)
-### [Minimal Module Example](#Minimal Module Example.)
+[Minimal Module Example](#Minimal Module Example)
 ### [Model Sheets](#Model Sheets :)
 #### - [ResCountryState example](#ResCountryState example)
 
@@ -114,7 +114,7 @@ When that file exists the command line can be, simply . . .
     
 See the section *Repeat Execution* below to learn how to get fine grained control of which *Action Steps* are executed or skipped.
 
-## Minimal Module Example.
+## Minimal Module Example
 
 
 There is a [minimal example](https://github.com/martinhbramwell/GData_OpenERP_Data_Pump/blob/master/models/MinimalModuleExample.py) with a single method, in GitHub, which the [OpenErpGDataController](https://docs.google.com/spreadsheet/ccc?key=0AiVG6SoU001RdFdyc1NxOHN4eWZ6Q0lLMHVyWUpkaHc) example uses.
