@@ -174,6 +174,22 @@ class OErpModel(object):
     def right_most_column(self, rangeDef, wksht):
         return wksht.get_int_addr(rangeDef.partition(":")[2])[1]
 
+    def dbIdFromExtId(self, ExtId, model, mapModel):
+        return mapModel.search_read([("name", "=", ExtId), ("model", "=", model)], ["res_id"])[0]["res_id"]
+
+    def title_row(self, limits, wksht):
+        ret = {}
+        row = wksht.row_values(1)
+        idx = 0
+        for col in row:
+            idx += 1
+            print 'Col : {} @ {}'.format(col, idx)
+            if idx >= limits['minCol'] and idx <= limits['maxCol']:
+                ret[col] = idx
+
+        return ret
+
+
     def getWorkingSource(self, parms):
         module_parms = {}
         module_parms['wkbk'] = self.gDataConnection.open_by_key(parms['docs_key'])
@@ -181,7 +197,9 @@ class OErpModel(object):
 
         module_parms['dictRange'] = self.getCellsRange(module_parms['wksht'], parms['data_range'])
         module_parms['numCols'] = self.right_most_column(module_parms['dictRange']['rangeDef'], module_parms['wksht'])
-        # print 'Column count is ' + str(module_parms['numCols'])
+        module_parms['nameCol'] = self.title_row(module_parms['dictRange'], module_parms['wksht'])
+
+        print 'Column count is ' + str(module_parms['numCols'])
 
         return module_parms
 
@@ -238,4 +256,3 @@ class OErpModel(object):
                 return special
         else:
             return special 
-
