@@ -20,6 +20,19 @@ class ResBank(OErpModel):
             , 'show': self.show
         }
 
+        self.myModel = None
+
+
+    def getRecord(self, id, external=False):
+        if self.myModel == None:
+            self.myModel = self.openErpConnection.get_model(OPENERP_MODULE_NAME)
+
+        if external:
+            id = super(ResBank, self).dbIdFromExtId(id, OPENERP_MODULE_NAME)
+
+        return self.myModel.read([id])[0]
+
+
 
     def process(self, wrksht, rowTask):
         super(ResBank, self).process(wrksht, rowTask)

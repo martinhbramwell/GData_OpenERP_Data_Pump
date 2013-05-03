@@ -6,6 +6,8 @@ Created on 2013-03-19
 @author: Martin H. Bramwell
 '''
 
+from peak.util.imports import lazyModule
+
 class OErpModel(object):
 
     openErpConnection = None
@@ -50,7 +52,19 @@ class OErpModel(object):
         self.shtTasks = None
         self.currentRow = -1
 
+        self.modelIrModelData = None
+
         
+    def setIrModelDataModel(self):
+        self.modelIrModelData = self.openErpConnection.get_model("ir.model.data")
+
+
+    def getRecord(self, model, id, external=False):
+        if self.modelIrModelData == None:
+            self.setIrModelDataModel()
+
+        return getattr(lazyModule('models.' + model), model)().getRecord(id, external)
+
     def starting(self, idx):
         # print 'Starting #' + str(idx)
 
@@ -174,8 +188,13 @@ class OErpModel(object):
     def right_most_column(self, rangeDef, wksht):
         return wksht.get_int_addr(rangeDef.partition(":")[2])[1]
 
-    def dbIdFromExtId(self, ExtId, model, mapModel):
-        return mapModel.search_read([("name", "=", ExtId), ("model", "=", model)], ["res_id"])[0]["res_id"]
+    def dbIdFromExtId(self, ExtId, model):
+        if self.modelIrModelData == None:
+            self.setIrModelDataModel()
+        return self.modelIrModelData.search_read([("name", "=", ExtId), ("model", "=", model)], ["res_id"])[0]["res_id"]
+
+
+
 
     def colNumsFromColNames(self, names):  # the array starts with the minCol title as zeroth element!
         titles = {}
@@ -232,9 +251,6 @@ class OErpModel(object):
         for item in data:
             print str(item)[:80]
 
-#        for idx in range(4):
-#            print data[idx]
-
         user_model = self.openErpConnection.get_model(model)
         user_model.load(fields, data)
 
@@ -264,3 +280,10 @@ class OErpModel(object):
                 return special
         else:
             return special 
+
+        
+
+    def testIt(self, task):
+        getattr(lazyModule('models.' + task), task)().test("AAA")
+        return
+

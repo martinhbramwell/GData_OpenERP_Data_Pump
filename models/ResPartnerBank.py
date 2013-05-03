@@ -46,18 +46,7 @@ class ResPartnerBank(OErpModel):
         print 'Task check for key "docs_key" found : "' + parms['docs_key'] + '"!'
         print 'Task check for key "docs_sheet" found : "' + parms['docs_sheet'] + '"!'
 
-        module_parms = super(ResPartnerBank, self).getWorkingSource(parms)
-
-        # print 'Range : {}'.format(module_parms['data_range'])
-        print module_parms
-
-        print 'xxxx : '
-
-        
-        for col in module_parms['nameCol']:
-            print 'Name : {}.  Number : {}.'.format(col, module_parms['nameCol'][col])
-
-        print 'xxxx : '
+        return
 
 
 
@@ -66,21 +55,12 @@ class ResPartnerBank(OErpModel):
         print 'Loading to "{}".'.format(OPENERP_MODULE_NAME)
 
         print '# - - prepare models - - #'
-
         modelResPartnerBank = self.openErpConnection.get_model(OPENERP_MODULE_NAME)
-
-        modelIrModelData = self.openErpConnection.get_model("ir.model.data")
-        modelResCompany = self.openErpConnection.get_model("res.company")
-        modelResBank = self.openErpConnection.get_model("res.bank")
-
 
 
         print '# - - prepare dictionary : source columns names to numbers - - #'
-        
         module_parms = super(ResPartnerBank, self).getWorkingSource(parms)
-
         titles = module_parms['nameCol']
-
 
 
         print '# - - prepare ids : database ids from external ids  - - #'
@@ -94,37 +74,39 @@ class ResPartnerBank(OErpModel):
             dataAcct = {}
 
             # Spreadsheet fields
-            dataAcct['acc_number'] = row[titles['acc_number']-1]
-            dataAcct['state']      = row[titles['state']-1]
+            dataAcct['acc_number']  = row[titles['acc_number']-1]
+            dataAcct['state']       = row[titles['state']-1]
 
             #  Company fields
-            dataAcct['company_id'] = super(ResPartnerBank, self).dbIdFromExtId(row[titles['company_id']-1], 'res.company', modelIrModelData)
-            company = modelResCompany.read([dataAcct['company_id']])[0]
+            company = super(ResPartnerBank, self).getRecord("ResCompany", row[titles['company_id']-1], True)
 
-            dataAcct['partner_id'] = company['partner_id'][0]
-            dataAcct['street']     = company['street'].encode('utf-8')
-            dataAcct['owner_name'] = company['name'].encode('utf-8')
-            dataAcct['city']       = company['city'].encode('utf-8')
-            dataAcct['zip']        = company['zip']
-            dataAcct['country_id'] = company['country_id'][0]
-            dataAcct['state_id']   = company['state_id'][0]
+            dataAcct['company_id']  = company['id']
+            dataAcct['partner_id']  = company['partner_id'][0]
+            dataAcct['street']      = company['street'].encode('utf-8')
+            dataAcct['owner_name']  = company['name'].encode('utf-8')
+            dataAcct['city']        = company['city'].encode('utf-8')
+            dataAcct['zip']         = company['zip']
+            dataAcct['country_id']  = company['country_id'][0]
+            dataAcct['state_id']    = company['state_id'][0]
 
 
             #  Bank fields
-            dataAcct['bank'] = super(ResPartnerBank, self).dbIdFromExtId(row[titles['bank_bic']-1], 'res.bank', modelIrModelData)
-            bank = modelResBank.read([dataAcct['bank']])[0]
+            bank = super(ResPartnerBank, self).getRecord("ResBank", row[titles['bank_bic']-1], True)
 
-            dataAcct['bank_name']  = bank['name']
-            dataAcct['bank_bic']   = bank['name']
-            dataAcct['id'] = dataAcct['bank_bic'] + dataAcct['acc_number']
+            dataAcct['bank']        = bank['id']
+            dataAcct['bank_name']   = bank['name']
+            dataAcct['bank_bic']    = bank['name']
+
+            dataAcct['id']          = dataAcct['bank_bic'] + dataAcct['acc_number']
 
             # Unused fields
             dataAcct['footer']      = False
             dataAcct['journal_id']  = False
             dataAcct['currency_id'] = False
             dataAcct['sequence']    = 0
-            dataAcct['name'] = '/'
+            dataAcct['name']        = '/'
             
+            # Create the new record
             modelResPartnerBank.create(dataAcct)
 
             print 'Processed row#{} '.format(idx)
