@@ -177,13 +177,21 @@ class OErpModel(object):
     def dbIdFromExtId(self, ExtId, model, mapModel):
         return mapModel.search_read([("name", "=", ExtId), ("model", "=", model)], ["res_id"])[0]["res_id"]
 
+    def colNumsFromColNames(self, names):  # the array starts with the minCol title as zeroth element!
+        titles = {}
+        for title in names:
+            titles[title] = names[title]
+            print 'OErpModel >>>>>>>>>>>>>>>>>> Name : {}.  Number : {}.'.format(title, titles[title])
+        
+        return titles
+
     def title_row(self, limits, wksht):
         ret = {}
         row = wksht.row_values(1)
         idx = 0
         for col in row:
             idx += 1
-            print 'Col : {} @ {}'.format(col, idx)
+            # print 'Col : {} @ {}'.format(col, idx)
             if idx >= limits['minCol'] and idx <= limits['maxCol']:
                 ret[col] = idx
 
@@ -199,7 +207,7 @@ class OErpModel(object):
         module_parms['numCols'] = self.right_most_column(module_parms['dictRange']['rangeDef'], module_parms['wksht'])
         module_parms['nameCol'] = self.title_row(module_parms['dictRange'], module_parms['wksht'])
 
-        print 'Column count is ' + str(module_parms['numCols'])
+        # print 'Column count is ' + str(module_parms['numCols'])
 
         return module_parms
 
