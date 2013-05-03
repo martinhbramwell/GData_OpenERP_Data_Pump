@@ -54,6 +54,8 @@ The overall action is a dispatcher within a dispatcher; the outer dispatcher ins
 - res.country.state	: bulk load
 - res.partner.category	: bulk load
 - res.partner		: bulk load company, bulk load person
+- res.partner.bank.type : bulk load
+- res.partner.bank      : bulk load
 - res.bank		: bulk load
 - res.company		: bulk load
  
