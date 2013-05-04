@@ -293,6 +293,8 @@ The execution of an example  with five *Action Steps* and *Complete* and *Incomp
   - [http://pythonhosted.org/OERPLib/ref_db.html#oerplib.service.db.DB](http://pythonhosted.org/OERPLib/ref_db.html#oerplib.service.db.DB)
 - for other Google & OpenERP connectivity
   - [http://www.youtube.com/playlist?p=PLq7op4J183lX44ZlXPiHxUpRvmmRDtxye](http://www.youtube.com/playlist?p=PLq7op4J183lX44ZlXPiHxUpRvmmRDtxye)
+- Pre-install-steps
+  - [How to prepare prerequisites for the installation process.](https://github.com/martinhbramwell/GData_OpenERP_Data_Pump/wiki/Pre-install-steps#how-to-prepare-prerequisites-for-the-installation-process)
 
 <a name="Link to home site"/>
 ### Link to home site
