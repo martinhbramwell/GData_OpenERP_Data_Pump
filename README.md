@@ -88,10 +88,12 @@ The remote procedures you can call are documented here : [ORM and models](http:/
 
 You will need to install the earlier mentioned third party tools:
 
-    sudo easy_install gspread
-    sudo easy_install openerplib
-    sudo easy_install argparse
-    sudo easy_install Importing
+    gspread
+    openerplib
+    argparse
+    Importing
+
+Please see the installation instructions in [[Pre install steps]]
 
 You will have to make a private copy of the two examples ([OpenErpGDataController](https://docs.google.com/spreadsheet/ccc?key=0AiVG6SoU001RdFdyc1NxOHN4eWZ6Q0lLMHVyWUpkaHc) and [OpenErpGDataModel](https://docs.google.com/spreadsheet/ccc?key=0AiVG6SoU001RdE9BNnljbFVpa0xfazk0SUZOeWx1aEE)).  Don't try to use the originals. It won't work.  The pump refers to the controller workbook by means of its search key and it, in turn, needs the search key of the model workbook.  Since you'll have made copies of both you'll need to be sure you use the correct keys.  
 
