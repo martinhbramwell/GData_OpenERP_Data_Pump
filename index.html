@@ -32,6 +32,35 @@
       <section>
         <h1>GData OpenERP Data Pump</h1>
 
+<p><a name="Summary"></a></p>
+
+<h2><a href="#Summary">Summary</a></h2>
+
+<p>A very simple tool for feeding Google Spreadsheet data into the XMLRPC channel of OpenERP V7.</p>
+
+<p>The goal is to facilitate controlling OpenERP instances from command line and DevOps tools (such as <a href="http://jenkins-ci.org/">http://jenkins-ci.org/</a>, <a href="http://rundeck.org/">http://rundeck.org/</a>, etc. )</p>
+
+<p>As much as possible, it uses third party tools to hide the complexity of XMLRPC and Google's and OpenERP's APIs:</p>
+
+<ul>
+<li>
+<a href="https://pypi.python.org/pypi/gspread/">gspread</a> - simplified wrapper to Google Spreadsheets API</li>
+<li>
+<a href="https://pypi.python.org/pypi/openerp-client-lib">openerplib</a> - simplified wrapper to OpenERP API</li>
+<li>
+<a href="https://pypi.python.org/pypi/argparse">argparse</a> - command line arguments organizer</li>
+<li>
+<a href="http://peak.telecommunity.com/DevCenter/Importing">Importing</a> - delay code module import until required</li>
+</ul><p>The <a href="https://docs.google.com/drawings/d/10hhX-2ChPynsfCaiQrNrt3eiy3m6j3Qz-0CF7NdnnQc">overview diagram</a> shows the main parts of the pump's operation.</p>
+
+<p>This <a href="https://docs.google.com/drawings/d/1Huy3CpSVM971iUX2M6bqBjjZIXES6SzchetloHjhy-I">detail diagram</a> shows the usage the pump makes of the columns in the controller sheets: <em>creds</em>, <em>tasks</em> and <em>parms</em>.</p>
+
+<p>There is a sample controller (<a href="https://docs.google.com/spreadsheet/ccc?key=0AiVG6SoU001RdFdyc1NxOHN4eWZ6Q0lLMHVyWUpkaHc">OpenErpGDataController</a>) and a sample model (<a href="https://docs.google.com/spreadsheet/ccc?key=0AiVG6SoU001RdE9BNnljbFVpa0xfazk0SUZOeWx1aEE">OpenErpGDataModel</a>) (TODO: test copying with Excel &amp;/or Libre Office)</p>
+
+<p>The overall action is a dispatcher within a dispatcher; the outer dispatcher instantiates classes named in column A of the <em>tasks</em> sheet while the inner dispatcher calls the <em>methods</em> of the class that have been named in the <em>Action Step</em> cells of the same row.</p>
+
+<p><a href="#Contents">Top</a></p>
+
 <p><a name="Contents"></a></p>
 
 <h3>Contents</h3>
@@ -72,31 +101,6 @@
 <hr><p><a name="Introduction"></a></p>
 
 <h2>Introduction</h2>
-
-<p>A very simple tool for feeding Google Spreadsheet data into the XMLRPC channel of OpenERP V7.</p>
-
-<p>The goal is to facilitate controlling OpenERP instances from command line and DevOps tools (such as <a href="http://jenkins-ci.org/">http://jenkins-ci.org/</a>, <a href="http://rundeck.org/">http://rundeck.org/</a>, etc. )</p>
-
-<p>As much as possible, it uses third party tools to hide the complexity of XMLRPC and Google's and OpenERP's APIs:</p>
-
-<ul>
-<li>
-<a href="https://pypi.python.org/pypi/gspread/">gspread</a> - simplified wrapper to Google Spreadsheets API</li>
-<li>
-<a href="https://pypi.python.org/pypi/openerp-client-lib">openerplib</a> - simplified wrapper to OpenERP API</li>
-<li>
-<a href="https://pypi.python.org/pypi/argparse">argparse</a> - command line arguments organizer</li>
-<li>
-<a href="http://peak.telecommunity.com/DevCenter/Importing">Importing</a> - delay code module import until required</li>
-</ul><p>The <a href="https://docs.google.com/drawings/d/10hhX-2ChPynsfCaiQrNrt3eiy3m6j3Qz-0CF7NdnnQc">overview diagram</a> shows the main parts of the pump's operation.</p>
-
-<p>This <a href="https://docs.google.com/drawings/d/1Huy3CpSVM971iUX2M6bqBjjZIXES6SzchetloHjhy-I">detail diagram</a> shows the usage the pump makes of the columns in the controller sheets: <em>creds</em>, <em>tasks</em> and <em>parms</em>.</p>
-
-<p>There is a sample controller (<a href="https://docs.google.com/spreadsheet/ccc?key=0AiVG6SoU001RdFdyc1NxOHN4eWZ6Q0lLMHVyWUpkaHc">OpenErpGDataController</a>) and a sample model (<a href="https://docs.google.com/spreadsheet/ccc?key=0AiVG6SoU001RdE9BNnljbFVpa0xfazk0SUZOeWx1aEE">OpenErpGDataModel</a>) (TODO: test copying with Excel &amp;/or Libre Office)</p>
-
-<p>The overall action is a dispatcher within a dispatcher; the outer dispatcher instantiates classes named in column A of the <em>tasks</em> sheet while the inner dispatcher calls the <em>methods</em> of the class that have been named in the <em>Action Step</em> cells of the same row.</p>
-
-<p><a href="#Contents">Top</a></p>
 
 <p><a name="Currently%20Available%20Tasks"></a></p>
 
