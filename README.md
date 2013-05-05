@@ -1,25 +1,8 @@
 GData OpenERP Data Pump
 =======================
 
-<a name="Contents"/>
-### Contents
-#### [Introduction](#Introduction)
-##### - [Currently Available Tasks](#Currently Available Tasks)
-##### - [Main Steps](#Main Steps)
-#### [First time execution](#First time execution)
-#### [Minimal Module Example](#Minimal Module Example)
-#### [Model Sheets](#Model Sheets)
-##### - [ResCountryState example](#ResCountryState example)
-##### - [ResUsers example](#ResUsers example)
-#### [Repeat executions](#Repeat executions)
-#### [Notes](#Notes)
-##### - [Some useful documentation](#Some useful documentation)
-##### - [Link to home site](#Link to home site)
-##### - [Credits](#Credits)
-
-- - - - - - - - - - - - -
-<a name="Introduction"/>
-## Introduction
+<a name="Summary"/>
+## [Summary](#Summary)
 
 A very simple tool for feeding Google Spreadsheet data into the XMLRPC channel of OpenERP V7.
 
@@ -42,7 +25,25 @@ The overall action is a dispatcher within a dispatcher; the outer dispatcher ins
 
 [Top](#Contents)
 
+<a name="Contents"/>
+### Contents
+#### [Introduction](#Introduction)
+##### - [Currently Available Tasks](#Currently Available Tasks)
+##### - [Main Steps](#Main Steps)
+#### [First time execution](#First time execution)
+#### [Minimal Module Example](#Minimal Module Example)
+#### [Model Sheets](#Model Sheets)
+##### - [ResCountryState example](#ResCountryState example)
+##### - [ResUsers example](#ResUsers example)
+#### [Repeat executions](#Repeat executions)
+#### [Notes](#Notes)
+##### - [Some useful documentation](#Some useful documentation)
+##### - [Link to home site](#Link to home site)
+##### - [Credits](#Credits)
 
+- - - - - - - - - - - - -
+<a name="Introduction"/>
+## Introduction
 
 <a name="Currently Available Tasks"/>
 ##### Currently Available Tasks
