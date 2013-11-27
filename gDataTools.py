@@ -28,11 +28,21 @@
 
 '''
 
+import sys
+from persistence import drop_store
 
-import argparse
-import creds
+
+# FIXME - - 
+#import argparse
+#import creds
+# - - - 
+
 import gspread
+
+# from utils import ConfigurationError
 import openerp_utils
+import google_utils
+import manage_arguments
 
 from models.OErpModel import OErpModel
 
@@ -69,6 +79,7 @@ def dispatchTasks(wkbk, start_row):
     return
 
 
+'''
 def login(credentials):
     
     gc = {}
@@ -96,6 +107,7 @@ def login(credentials):
         
     creds.silentremove(creds.credential_path)
     return None
+'''
                 
 def getPumpCredentials(wkbk):
 
@@ -106,28 +118,56 @@ def getPumpCredentials(wkbk):
 
     return creds
 
+def main(workbook_key, start_row):
 
-def main():
+    print "Starting"
+    google_connection = google_utils.GoogleConnection()
+        
+    if 1 == 0:
+        gc = google_connection.connection
+        
+        #
+        wkbk = gc.open_by_url(spreadsheet_url)
+        cnt = 1
+        print 'Found sheets:'
+        for sheet in wkbk.worksheets():
+            print ' - Sheet #{}: Id = {}  Title = {}'.format(cnt, sheet.id, sheet.title)
+            cnt += 1
+        #
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    credentials = creds.get()
-    google_connection = login(credentials)
+        print "Done"
+        exit(-1)
+    
 
     if google_connection is not None:
-        if google_connection['connection'] is not None:
+        if google_connection.connection is not None:
 
-            OErpModel.gDataConnection = google_connection['connection']
+            OErpModel.gDataConnection = google_connection.connection
 
-            print 'Workbook : {}'.format(google_connection['workbook_key'])
-            wkbk = OErpModel.gDataConnection.open_by_key(google_connection['workbook_key'])
+            print 'Workbook : {}'.format(workbook_key)
+            wkbk = OErpModel.gDataConnection.open_by_key(workbook_key)
 
             OErpModel.pumpCredentials = getPumpCredentials(wkbk)
             OErpModel.openErpConnection = openerp_utils.connect(OErpModel.pumpCredentials)
 			
-            dispatchTasks(wkbk, credentials['row'])
+            dispatchTasks(wkbk, start_row)
 
     print ''
 
 if __name__ == '__main__':
+    
+    args = manage_arguments.get()
+    
+    print args.clean
+    print args.workbook_key
+    print args.start_row    
+    
+    if args.clean:
+        drop_store()
+        print "Store dropped."
+        exit(0)
+        
+    main(args.workbook_key, args.start_row)
+    exit(0)
 
-    main()
-	

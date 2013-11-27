@@ -1,5 +1,8 @@
 *.py[cod]
 
+creds_oa.py
+creds_up.py
+
 # C extensions
 *.so
 
