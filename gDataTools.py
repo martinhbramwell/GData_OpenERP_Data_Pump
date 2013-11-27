@@ -78,37 +78,8 @@ def dispatchTasks(wkbk, start_row):
     print 'Found {} tasks to process.'.format(complete)
     return
 
-
-'''
-def login(credentials):
-    
-    gc = {}
-    
-    # Get Google uid/pwd from ~/.gdataCreds  a file in the format
-    #      {"user_id": "yourGoogleUID", "user_pwd": "yourGoogleUID"}
-
-    gc['workbook_key'] = credentials['key']
-    
-    if credentials['user_pwd'] is not None:
-        if credentials['user_id'] is not None: 
-            try:
-                gc['connection'] = gspread.login(credentials['user_id'], credentials['user_pwd'])
-                print 'Connected user "{}" to Google.'.format( credentials['user_id'])
-                return gc
-            except gspread.exceptions.AuthenticationError, e:
-                print "Google rejected those credentials."
-                creds.silentremove(creds.credential_path)
-                return None
-        
-        else:
-            print 'Google connection : ', 'No user id was supplied.  Use --u or --uid'
-    else:
-        print 'Google connection : ', 'No user password was supplied.  Use -p or --pwd'
-        
-    creds.silentremove(creds.credential_path)
-    return None
-'''
                 
+'''
 def getPumpCredentials(wkbk):
 
     shtCreds = wkbk.worksheet("Creds")
@@ -117,14 +88,15 @@ def getPumpCredentials(wkbk):
     creds = {t[0]:t[1] for t in lstlstCreds}
 
     return creds
+'''
 
 def main(workbook_key, start_row):
 
     print "Starting"
-    google_connection = google_utils.GoogleConnection()
+    google = google_utils.Google()
         
     if 1 == 0:
-        gc = google_connection.connection
+        gc = google.connection
         
         #
         wkbk = gc.open_by_url(spreadsheet_url)
@@ -140,18 +112,17 @@ def main(workbook_key, start_row):
         exit(-1)
     
 
-    if google_connection is not None:
-        if google_connection.connection is not None:
+    if google is not None:
+    
+        OErpModel.gDataConnection = google.connect()
 
-            OErpModel.gDataConnection = google_connection.connection
+        print 'Workbook : {}'.format(workbook_key)
+        wkbk = OErpModel.gDataConnection.open_by_key(workbook_key)
 
-            print 'Workbook : {}'.format(workbook_key)
-            wkbk = OErpModel.gDataConnection.open_by_key(workbook_key)
-
-            OErpModel.pumpCredentials = getPumpCredentials(wkbk)
-            OErpModel.openErpConnection = openerp_utils.connect(OErpModel.pumpCredentials)
-			
-            dispatchTasks(wkbk, start_row)
+        OErpModel.pumpCredentials = google_utils.getPumpCredentials(wkbk)
+        OErpModel.openErpConnection = openerp_utils.connect(OErpModel.pumpCredentials)
+		
+        dispatchTasks(wkbk, start_row)
 
     print ''
 

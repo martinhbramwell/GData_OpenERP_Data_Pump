@@ -18,14 +18,15 @@ msg = "Either a file named 'creds_oa.py' or a file named 'creds_up.py' must be p
 credentials = {}
 try:
     credentials = store['credentials']
+    print "Will connect with shelved credentials"
 except KeyError:
     try:
         from creds_oa import credentials
-        print "Will connect with gspread.authorize()"
+        print "Will try with OAuth credentials"
     except ImportError:
         try:
-            from creds_upx import credentials
-            print "Will connect with gspread.login()"
+            from creds_up import credentials
+            print "Will try with UID/PWD credentials"
         except ImportError:
             print "Configuration error: {} {}".format(expr, msg)
             exit(-1)
@@ -37,16 +38,35 @@ except KeyError:
 OAUTH = "oauth"
 UID_PWD = "uidpwd"
 
-class GoogleConnection(object):
+def getPumpCredentials(wkbk):
 
-    connection = "nuthin'"
+    shtCreds = wkbk.worksheet("Creds")
+    lstlstCreds = shtCreds.get_all_values()
+    
+    creds = {t[0]:t[1] for t in lstlstCreds}
 
-    if credentials['cred_type'] == OAUTH:
-        connection = authorize(credentials['access_token'], credentials['key_ring'])
-    elif credentials['cred_type'] == UID_PWD:
-        connection = login(credentials['uid'], credentials['pwd'])
-    else:
-        print "Configuration error: {} {}".format(expr, msg) 
-        exit(-1)
+    return creds
 
+
+class Google(object):
+
+    connection = None
+
+    def __init__(self):
+
+        global connection
         
+        print "Getting connection."
+        if credentials['cred_type'] == OAUTH:
+            connection = authorize(credentials['access_token'], credentials['key_ring'])
+            print "Will authorize."
+        elif credentials['cred_type'] == UID_PWD:
+            connection = login(credentials['uid'], credentials['pwd'])
+            print "Will log in."
+        else:
+            print "Configuration error: {} {}".format(expr, msg) 
+            exit(-1)
+
+
+    def connect(self):
+        return connection
