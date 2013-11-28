@@ -31,12 +31,6 @@
 import sys
 from persistence import drop_store
 
-
-# FIXME - - 
-#import argparse
-#import creds
-# - - - 
-
 import gspread
 
 # from utils import ConfigurationError
@@ -78,40 +72,12 @@ def dispatchTasks(wkbk, start_row):
     print 'Found {} tasks to process.'.format(complete)
     return
 
-                
-'''
-def getPumpCredentials(wkbk):
-
-    shtCreds = wkbk.worksheet("Creds")
-    lstlstCreds = shtCreds.get_all_values()
-    
-    creds = {t[0]:t[1] for t in lstlstCreds}
-
-    return creds
-'''
 
 def main(workbook_key, start_row):
 
     print "Starting"
     google = google_utils.Google()
         
-    if 1 == 0:
-        gc = google.connection
-        
-        #
-        wkbk = gc.open_by_url(spreadsheet_url)
-        cnt = 1
-        print 'Found sheets:'
-        for sheet in wkbk.worksheets():
-            print ' - Sheet #{}: Id = {}  Title = {}'.format(cnt, sheet.id, sheet.title)
-            cnt += 1
-        #
-        # - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-        print "Done"
-        exit(-1)
-    
-
     if google is not None:
     
         OErpModel.gDataConnection = google.connect()
