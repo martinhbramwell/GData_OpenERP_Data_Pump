@@ -7,6 +7,7 @@ Created on 2013-11-25
 '''
 
 import os
+import stat
 import shelve
 
 # This is the shelve file where our OAuth arguments persist between executions
@@ -26,6 +27,7 @@ def make_store():
 """
     global store
     store = shelve.open(store_path, writeback = True)
+    os.chmod(store_path, stat.S_IRUSR | stat.S_IWUSR)
     return store
     
 def reopen_store():
