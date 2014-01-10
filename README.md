@@ -103,12 +103,12 @@ You will have to make a private copy of the two examples ([OpenErpGDataControlle
 
 With that complete you can then run. . . 
 
-    /opt/GData_OpenERP_Data_Pump$ ./gDataTools.py
+    /opt/GData_OpenERP_Data_Pump$ ./pump.py
 
 . . . to get . . . 
 
-    usage: gDataTools.py [-h] [-p USER_PWD] [-u USER_ID] key
-    gDataTools.py: error: too few arguments
+    usage: pump.py [-h] [-p USER_PWD] [-u USER_ID] key
+    pump.py: error: too few arguments
 
 The missing parameters are the access credentials for the [OpenErpGDataController](https://docs.google.com/spreadsheet/ccc?key=0AiVG6SoU001RdFdyc1NxOHN4eWZ6Q0lLMHVyWUpkaHc)
 
@@ -118,15 +118,15 @@ The missing parameters are the access credentials for the [OpenErpGDataControlle
 
 Thus a valid call would be . . . 
 
-    /opt/GData_OpenERP_Data_Pump$ ./gDataTools.py -u yourgoogleid -p yourgooglepwd "0AiVG6SoU001RdFdyc1NxOHN4eWZ6Q0lLMHVyWUpkaHc"
+    /opt/GData_OpenERP_Data_Pump$ ./pump.py -u yourgoogleid -p yourgooglepwd "0AiVG6SoU001RdFdyc1NxOHN4eWZ6Q0lLMHVyWUpkaHc"
     
-However, to avoid UID and PWD from appearing in the command line, `gDataTools.py` will record those values in the file `.gdataCreds` that has the form :
+However, to avoid UID and PWD from appearing in the command line, `pump.py` will record those values in the file `.gdataCreds` that has the form :
 
     {"user_id": "yourgoogleid", "user_pwd": "yourgooglepwd"} 
 
 When that file exists the command line can be, simply . . . 
 
-    /opt/GData_OpenERP_Data_Pump$ ./gDataTools.py "0AiVG6SoU001RdFdyc1NxOHN4eWZ6Q0lLMHVyWUpkaHc"
+    /opt/GData_OpenERP_Data_Pump$ ./pump.py "0AiVG6SoU001RdFdyc1NxOHN4eWZ6Q0lLMHVyWUpkaHc"
     
 See the section *Repeat Execution* below to learn how to get fine grained control of which *Action Steps* are executed or skipped.
 
