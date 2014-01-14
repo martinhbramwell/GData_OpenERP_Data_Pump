@@ -94,9 +94,9 @@ You will need to install the earlier mentioned third party tools:
     argparse
     Importing
 
-Please see the installation instructions in ["How to prepare prerequisites for the installation process."](https://github.com/martinhbramwell/GData_OpenERP_Data_Pump/wiki/Pre-install-steps)
+Please see the installation instructions in ["How to prepare prerequisites for the installation process."](https://github.com/martinhbramwell/GData_OpenERP_Data_Pump/wiki/Installation-Procedure) 
 
-The video [Google Spreadsheets to OpenERP Data Pump: Step #1 Installation](http://youtu.be/MEcNaHcp6Wg) might help.
+The video [Google Spreadsheets to OpenERP Data Pump: Step #1 Installation](http://youtu.be/MEcNaHcp6Wg) might help, but note that it is quite out of date now.
 
 You will have to make a private copy of the two examples ([OpenErpGDataController](https://docs.google.com/spreadsheet/ccc?key=0AiVG6SoU001RdFdyc1NxOHN4eWZ6Q0lLMHVyWUpkaHc) and [OpenErpGDataModel](https://docs.google.com/spreadsheet/ccc?key=0AiVG6SoU001RdE9BNnljbFVpa0xfazk0SUZOeWx1aEE)).  Don't try to use the originals. It won't work.  The pump refers to the controller workbook by means of its search key and it, in turn, needs the search key of the model workbook.  Since you'll have made copies of both you'll need to be sure you use the correct keys.  
 
