@@ -1,40 +1,44 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
+
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Google Spreadsheets to OpenERP Data Pump by martinhbramwell</title>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Google Spreadsheets to OpenERP Data Pump : A tool for organizing, managing and pumping libraries of raw data from Google Spreadsheets into OpenERP V7&#39;s XMLRPC channel. " />
 
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <script src="javascripts/scale.fix.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Google Spreadsheets to OpenERP Data Pump</title>
   </head>
+
   <body>
-    <div class="wrapper">
-      <header>
-        <h1 class="header">Google Spreadsheets to OpenERP Data Pump</h1>
-        <p class="header">A tool for organizing, managing and pumping libraries of raw data from Google Spreadsheets into OpenERP V7's XMLRPC channel. </p>
 
-        <ul>
-          <li class="download"><a class="buttons" href="https://github.com/martinhbramwell/GData_OpenERP_Data_Pump/zipball/master">Download ZIP</a></li>
-          <li class="download"><a class="buttons" href="https://github.com/martinhbramwell/GData_OpenERP_Data_Pump/tarball/master">Download TAR</a></li>
-          <li><a class="buttons github" href="https://github.com/martinhbramwell/GData_OpenERP_Data_Pump">View On GitHub</a></li>
-        </ul>
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/martinhbramwell/GData_OpenERP_Data_Pump">View on GitHub</a>
 
-        <p class="header">This project is maintained by <a class="header name" href="https://github.com/martinhbramwell">martinhbramwell</a></p>
+          <h1 id="project_title">Google Spreadsheets to OpenERP Data Pump</h1>
+          <h2 id="project_tagline">A tool for organizing, managing and pumping libraries of raw data from Google Spreadsheets into OpenERP V7&#39;s XMLRPC channel. </h2>
 
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/martinhbramwell/GData_OpenERP_Data_Pump/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/martinhbramwell/GData_OpenERP_Data_Pump/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
 
-      </header>
-      <section>
-        <h1>GData OpenERP Data Pump</h1>
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a name="gdata-openerp-data-pump" class="anchor" href="#gdata-openerp-data-pump"><span class="octicon octicon-link"></span></a>GData OpenERP Data Pump</h1>
 
 <p><a name="Summary"></a></p>
 
-<h2><a href="#Summary">Summary</a></h2>
+<h2>
+<a name="summary" class="anchor" href="#summary"><span class="octicon octicon-link"></span></a><a href="#Summary">Summary</a>
+</h2>
 
 <p>A very simple tool for feeding Google Spreadsheet data into the XMLRPC channel of OpenERP V7.</p>
 
@@ -63,48 +67,70 @@
 
 <p><a name="Contents"></a></p>
 
-<h3>Contents</h3>
+<h3>
+<a name="contents" class="anchor" href="#contents"><span class="octicon octicon-link"></span></a>Contents</h3>
 
-<h4><a href="#Introduction">Introduction</a></h4>
+<h4>
+<a name="introduction" class="anchor" href="#introduction"><span class="octicon octicon-link"></span></a><a href="#Introduction">Introduction</a>
+</h4>
 
-<h5>- <a href="#Currently%20Available%20Tasks">Currently Available Tasks</a>
+<h5>
+<a name="--currently-available-tasks" class="anchor" href="#--currently-available-tasks"><span class="octicon octicon-link"></span></a>- <a href="#Currently%20Available%20Tasks">Currently Available Tasks</a>
 </h5>
 
-<h5>- <a href="#Main%20Steps">Main Steps</a>
+<h5>
+<a name="--main-steps" class="anchor" href="#--main-steps"><span class="octicon octicon-link"></span></a>- <a href="#Main%20Steps">Main Steps</a>
 </h5>
 
-<h4><a href="#First%20time%20execution">First time execution</a></h4>
+<h4>
+<a name="first-time-execution" class="anchor" href="#first-time-execution"><span class="octicon octicon-link"></span></a><a href="#First%20time%20execution">First time execution</a>
+</h4>
 
-<h4><a href="#Minimal%20Module%20Example">Minimal Module Example</a></h4>
+<h4>
+<a name="minimal-module-example" class="anchor" href="#minimal-module-example"><span class="octicon octicon-link"></span></a><a href="#Minimal%20Module%20Example">Minimal Module Example</a>
+</h4>
 
-<h4><a href="#Model%20Sheets">Model Sheets</a></h4>
+<h4>
+<a name="model-sheets" class="anchor" href="#model-sheets"><span class="octicon octicon-link"></span></a><a href="#Model%20Sheets">Model Sheets</a>
+</h4>
 
-<h5>- <a href="#ResCountryState%20example">ResCountryState example</a>
+<h5>
+<a name="--rescountrystate-example" class="anchor" href="#--rescountrystate-example"><span class="octicon octicon-link"></span></a>- <a href="#ResCountryState%20example">ResCountryState example</a>
 </h5>
 
-<h5>- <a href="#ResUsers%20example">ResUsers example</a>
+<h5>
+<a name="--resusers-example" class="anchor" href="#--resusers-example"><span class="octicon octicon-link"></span></a>- <a href="#ResUsers%20example">ResUsers example</a>
 </h5>
 
-<h4><a href="#Repeat%20executions">Repeat executions</a></h4>
+<h4>
+<a name="repeat-executions" class="anchor" href="#repeat-executions"><span class="octicon octicon-link"></span></a><a href="#Repeat%20executions">Repeat executions</a>
+</h4>
 
-<h4><a href="#Notes">Notes</a></h4>
+<h4>
+<a name="notes" class="anchor" href="#notes"><span class="octicon octicon-link"></span></a><a href="#Notes">Notes</a>
+</h4>
 
-<h5>- <a href="#Some%20useful%20documentation">Some useful documentation</a>
+<h5>
+<a name="--some-useful-documentation" class="anchor" href="#--some-useful-documentation"><span class="octicon octicon-link"></span></a>- <a href="#Some%20useful%20documentation">Some useful documentation</a>
 </h5>
 
-<h5>- <a href="#Link%20to%20home%20site">Link to home site</a>
+<h5>
+<a name="--link-to-home-site" class="anchor" href="#--link-to-home-site"><span class="octicon octicon-link"></span></a>- <a href="#Link%20to%20home%20site">Link to home site</a>
 </h5>
 
-<h5>- <a href="#Credits">Credits</a>
+<h5>
+<a name="--credits" class="anchor" href="#--credits"><span class="octicon octicon-link"></span></a>- <a href="#Credits">Credits</a>
 </h5>
 
 <hr><p><a name="Introduction"></a></p>
 
-<h2>Introduction</h2>
+<h2>
+<a name="introduction-1" class="anchor" href="#introduction-1"><span class="octicon octicon-link"></span></a>Introduction</h2>
 
 <p><a name="Currently%20Available%20Tasks"></a></p>
 
-<h5>Currently Available Tasks</h5>
+<h5>
+<a name="currently-available-tasks" class="anchor" href="#currently-available-tasks"><span class="octicon octicon-link"></span></a>Currently Available Tasks</h5>
 
 <ul>
 <li>database      : create database</li>
@@ -120,7 +146,8 @@
 <li>res.company       : bulk load</li>
 </ul><p><a name="Main%20Steps"></a></p>
 
-<h5>Main Steps</h5>
+<h5>
+<a name="main-steps" class="anchor" href="#main-steps"><span class="octicon octicon-link"></span></a>Main Steps</h5>
 
 <p>In more detail, the action is:</p>
 
@@ -142,7 +169,8 @@
 
 <p><a name="First%20time%20execution"></a></p>
 
-<h2>First time execution</h2>
+<h2>
+<a name="first-time-execution-1" class="anchor" href="#first-time-execution-1"><span class="octicon octicon-link"></span></a>First time execution</h2>
 
 <p>You will need to install the earlier mentioned third party tools:</p>
 
@@ -152,21 +180,21 @@ argparse
 Importing
 </code></pre>
 
-<p>Please see the installation instructions in <a href="https://github.com/martinhbramwell/GData_OpenERP_Data_Pump/wiki/Pre-install-steps">"How to prepare prerequisites for the installation process."</a></p>
+<p>Please see the installation instructions in <a href="https://github.com/martinhbramwell/GData_OpenERP_Data_Pump/wiki/Installation-Procedure">"How to prepare prerequisites for the installation process."</a> </p>
 
-<p>The video <a href="http://youtu.be/MEcNaHcp6Wg">Google Spreadsheets to OpenERP Data Pump: Step #1 Installation</a> might help.</p>
+<p>The video <a href="http://youtu.be/MEcNaHcp6Wg">Google Spreadsheets to OpenERP Data Pump: Step #1 Installation</a> might help, but note that it is quite out of date now.</p>
 
 <p>You will have to make a private copy of the two examples (<a href="https://docs.google.com/spreadsheet/ccc?key=0AiVG6SoU001RdFdyc1NxOHN4eWZ6Q0lLMHVyWUpkaHc">OpenErpGDataController</a> and <a href="https://docs.google.com/spreadsheet/ccc?key=0AiVG6SoU001RdE9BNnljbFVpa0xfazk0SUZOeWx1aEE">OpenErpGDataModel</a>).  Don't try to use the originals. It won't work.  The pump refers to the controller workbook by means of its search key and it, in turn, needs the search key of the model workbook.  Since you'll have made copies of both you'll need to be sure you use the correct keys.  </p>
 
 <p>With that complete you can then run. . . </p>
 
-<pre><code>/opt/GData_OpenERP_Data_Pump$ ./gDataTools.py
+<pre><code>/opt/GData_OpenERP_Data_Pump$ ./pump.py
 </code></pre>
 
 <p>. . . to get . . . </p>
 
-<pre><code>usage: gDataTools.py [-h] [-p USER_PWD] [-u USER_ID] key
-gDataTools.py: error: too few arguments
+<pre><code>usage: pump.py [-h] [-p USER_PWD] [-u USER_ID] key
+pump.py: error: too few arguments
 </code></pre>
 
 <p>The missing parameters are the access credentials for the <a href="https://docs.google.com/spreadsheet/ccc?key=0AiVG6SoU001RdFdyc1NxOHN4eWZ6Q0lLMHVyWUpkaHc">OpenErpGDataController</a></p>
@@ -177,17 +205,17 @@ gDataTools.py: error: too few arguments
 <li>key - the spreadsheet key taken from URL of the spreadsheet. Eg: "0AiVG6SoU001RdFdyc1NxOHN4eWZ6Q0lLMHVyWUpkaHc"</li>
 </ul><p>Thus a valid call would be . . . </p>
 
-<pre><code>/opt/GData_OpenERP_Data_Pump$ ./gDataTools.py -u yourgoogleid -p yourgooglepwd "0AiVG6SoU001RdFdyc1NxOHN4eWZ6Q0lLMHVyWUpkaHc"
+<pre><code>/opt/GData_OpenERP_Data_Pump$ ./pump.py -u yourgoogleid -p yourgooglepwd "0AiVG6SoU001RdFdyc1NxOHN4eWZ6Q0lLMHVyWUpkaHc"
 </code></pre>
 
-<p>However, to avoid UID and PWD from appearing in the command line, <code>gDataTools.py</code> will record those values in the file <code>.gdataCreds</code> that has the form :</p>
+<p>However, to avoid UID and PWD from appearing in the command line, <code>pump.py</code> will record those values in the file <code>.gdataCreds</code> that has the form :</p>
 
 <pre><code>{"user_id": "yourgoogleid", "user_pwd": "yourgooglepwd"} 
 </code></pre>
 
 <p>When that file exists the command line can be, simply . . . </p>
 
-<pre><code>/opt/GData_OpenERP_Data_Pump$ ./gDataTools.py "0AiVG6SoU001RdFdyc1NxOHN4eWZ6Q0lLMHVyWUpkaHc"
+<pre><code>/opt/GData_OpenERP_Data_Pump$ ./pump.py "0AiVG6SoU001RdFdyc1NxOHN4eWZ6Q0lLMHVyWUpkaHc"
 </code></pre>
 
 <p>See the section <em>Repeat Execution</em> below to learn how to get fine grained control of which <em>Action Steps</em> are executed or skipped.</p>
@@ -196,7 +224,8 @@ gDataTools.py: error: too few arguments
 
 <p><a name="Minimal%20Module%20Example"></a></p>
 
-<h2>Minimal Module Example</h2>
+<h2>
+<a name="minimal-module-example-1" class="anchor" href="#minimal-module-example-1"><span class="octicon octicon-link"></span></a>Minimal Module Example</h2>
 
 <p>There is a <a href="https://github.com/martinhbramwell/GData_OpenERP_Data_Pump/blob/master/models/MinimalModuleExample.py">minimal example</a> with a single method, in GitHub, which the <a href="https://docs.google.com/spreadsheet/ccc?key=0AiVG6SoU001RdFdyc1NxOHN4eWZ6Q0lLMHVyWUpkaHc">OpenErpGDataController</a> example uses.</p>
 
@@ -225,7 +254,8 @@ gDataTools.py: error: too few arguments
 
 <p><a name="Model%20Sheets"></a></p>
 
-<h2>Model Sheets</h2>
+<h2>
+<a name="model-sheets-1" class="anchor" href="#model-sheets-1"><span class="octicon octicon-link"></span></a>Model Sheets</h2>
 
 <hr><p>Based on the pattern of loading name/value pairs into a dictionary, and passing the dictionary to a method, there is really no limit to what the called method can be made to do.</p>
 
@@ -235,7 +265,8 @@ gDataTools.py: error: too few arguments
 
 <p><a name="ResCountryState%20example"></a></p>
 
-<h3>ResCountryState example</h3>
+<h3>
+<a name="rescountrystate-example" class="anchor" href="#rescountrystate-example"><span class="octicon octicon-link"></span></a>ResCountryState example</h3>
 
 <p><a href="https://github.com/martinhbramwell/GData_OpenERP_Data_Pump/blob/master/models/ResCountryState.py">ResCountryState.py</a> provides a complete example of a high speed data load operation. The goal is to collect the correct data for the <code>openerplib</code> command <code>user_model.load(fields, data)</code>.</p>
 
@@ -282,7 +313,8 @@ gDataTools.py: error: too few arguments
 
 <p><a name="ResUsers%20example"></a></p>
 
-<h3>ResUsers example</h3>
+<h3>
+<a name="resusers-example" class="anchor" href="#resusers-example"><span class="octicon octicon-link"></span></a>ResUsers example</h3>
 
 <p>The class in <a href="https://github.com/martinhbramwell/GData_OpenERP_Data_Pump/blob/master/models/ResUsers.py">ResUsers.py</a> shows a simple update of a single model record.  It has no need to pull lots of data, so the <em>parms</em> page can provide what is needed directly.</p>
 
@@ -311,7 +343,8 @@ gDataTools.py: error: too few arguments
 
 <p><a name="Repeat%20executions"></a></p>
 
-<h2>Repeat executions</h2>
+<h2>
+<a name="repeat-executions-1" class="anchor" href="#repeat-executions-1"><span class="octicon octicon-link"></span></a>Repeat executions</h2>
 
 <p>In each child class of <code>OErpModel.py</code> there should be calls to the parent class methods, <code>starting</code> and <code>finished</code> just before and just after the call to an <em>Action Step</em>, like this:</p>
 
@@ -349,11 +382,13 @@ __
 
 <p><a name="Notes"></a></p>
 
-<h2>Notes</h2>
+<h2>
+<a name="notes-1" class="anchor" href="#notes-1"><span class="octicon octicon-link"></span></a>Notes</h2>
 
 <p><a name="Some%20useful%20documentation"></a></p>
 
-<h3>Some useful documentation</h3>
+<h3>
+<a name="some-useful-documentation" class="anchor" href="#some-useful-documentation"><span class="octicon octicon-link"></span></a>Some useful documentation</h3>
 
 <ul>
 <li>for the db service:
@@ -377,13 +412,15 @@ __
 </li>
 </ul><p><a name="Link%20to%20home%20site"></a></p>
 
-<h3>Link to home site</h3>
+<h3>
+<a name="link-to-home-site" class="anchor" href="#link-to-home-site"><span class="octicon octicon-link"></span></a>Link to home site</h3>
 
 <p><a href="http://martinhbramwell.github.io/GData_OpenERP_Data_Pump">http://martinhbramwell.github.io/GData_OpenERP_Data_Pump</a></p>
 
 <p><a name="Credits"></a></p>
 
-<h3>Credits</h3>
+<h3>
+<a name="credits" class="anchor" href="#credits"><span class="octicon octicon-link"></span></a>Credits</h3>
 
 <ol>
 <li>Some ideas pilfered from here <a href="https://gist.github.com/t3dev/3016471">https://gist.github.com/t3dev/3016471</a>
@@ -394,12 +431,17 @@ __
 </li>
 </ol><p><a href="#Contents">Top</a></p>
       </section>
-      <footer>
-        <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Google Spreadsheets to OpenERP Data Pump maintained by <a href="https://github.com/martinhbramwell">martinhbramwell</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
       </footer>
     </div>
-    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
-		          <script type="text/javascript">
+
+              <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
             document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
           </script>
@@ -409,6 +451,7 @@ __
             pageTracker._trackPageview();
             } catch(err) {}
           </script>
+
 
   </body>
 </html>
