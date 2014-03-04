@@ -6,7 +6,14 @@ GData OpenERP Data Pump
 
 A very simple tool for feeding Google Spreadsheet data into the XMLRPC channel of OpenERP V7.
 
-The goal is to facilitate controlling OpenERP instances from command line and DevOps tools (such as [http://jenkins-ci.org/](http://jenkins-ci.org/), [http://rundeck.org/](http://rundeck.org/), etc. )
+It is **not** intended for massive dataloading into OpenERP.
+
+Instead, it has been created to help you learn OpenERP.  With it you can effortlessly import, and reimport, very complicated sets of real user data with a single command.
+
+While you learn OpenERP you can unwittingly introduce major errors that only show up days or weeks later.  Database backups are no help at all -- you have to go back right back to the beginning and start again.
+
+With this data pump you can recover from such disasters with very little effort at all.
+
 
 ***For a quick look at the pump in action check out step #9 in this video series: [DevOps for OpenERP](http://blog.warehouseman.com/2014/02/step-00-handbook-for-devops-for-openerp.html)***
 
