@@ -8,6 +8,8 @@ A very simple tool for feeding Google Spreadsheet data into the XMLRPC channel o
 
 The goal is to facilitate controlling OpenERP instances from command line and DevOps tools (such as [http://jenkins-ci.org/](http://jenkins-ci.org/), [http://rundeck.org/](http://rundeck.org/), etc. )
 
+***For a quick look at the pump in action check out step #9 in this video series: [DevOps for OpenERP](http://blog.warehouseman.com/2014/02/step-00-handbook-for-devops-for-openerp.html)***
+
 As much as possible, it uses third party tools to hide the complexity of XMLRPC and Google's and OpenERP's APIs:
 
 - [gspread](https://pypi.python.org/pypi/gspread/) - simplified wrapper to Google Spreadsheets API
