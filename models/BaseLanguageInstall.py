@@ -9,10 +9,11 @@ from OErpModel import OErpModel
 
 OPENERP_MODULE_NAME = 'base.language.install'
 
-class BaseLanguageInstall(OErpModel):
+class BaseLanguageInstall(OErpModel)
+
     def __init__(self):
         super(BaseLanguageInstall, self).__init__()
-      
+
         self.methods = {
               'chkTask': self.chkTask
             , 'install': self.install
