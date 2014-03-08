@@ -20,7 +20,7 @@ With this data pump you can recover from such disasters with very little effort 
 As much as possible, it uses third party tools to hide the complexity of XMLRPC and Google's and OpenERP's APIs:
 
 - [gspread](https://pypi.python.org/pypi/gspread/) - simplified wrapper to Google Spreadsheets API
-- [openerplib](https://pypi.python.org/pypi/openerp-client-lib) - simplified wrapper to OpenERP API
+- [oerplib](https://pypi.python.org/pypi/openerp-client-lib) - simplified wrapper to OpenERP API
 - [argparse](https://pypi.python.org/pypi/argparse) - command line arguments organizer
 - [Importing](http://peak.telecommunity.com/DevCenter/Importing) - delay code module import until required
 
@@ -99,7 +99,7 @@ The remote procedures you can call are documented here : [ORM and models](http:/
 You will need to install the earlier mentioned third party tools:
 
     gspread
-    openerplib
+    oerplib
     argparse
     Importing
 
@@ -189,7 +189,7 @@ Note: The *parms* sheet and Python code could be made more intelligent about der
 <a name="ResCountryState example"/>
 ### ResCountryState example
 
-[ResCountryState.py](https://github.com/martinhbramwell/GData_OpenERP_Data_Pump/blob/master/models/ResCountryState.py) provides a complete example of a high speed data load operation. The goal is to collect the correct data for the `openerplib` command `user_model.load(fields, data)`.
+[ResCountryState.py](https://github.com/martinhbramwell/GData_OpenERP_Data_Pump/blob/master/models/ResCountryState.py) provides a complete example of a high speed data load operation. The goal is to collect the correct data for the `oerplib` command `user_model.load(fields, data)`.
 
 In the *tasks* sheet, of [OpenErpGDataController](https://docs.google.com/spreadsheet/ccc?key=0AiVG6SoU001RdFdyc1NxOHN4eWZ6Q0lLMHVyWUpkaHc), the row containing the class name `ResCountryState` provides the method to be called (`load`) and the range in the *parms* sheet where the parameters for `load` can be found.  In the *tasks* sheet, the row containing the class name `ResCountryState` provides the key names, and the following row provides the values, to be added to the dictionary that will be passed to `load`.
 
