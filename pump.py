@@ -34,8 +34,9 @@ from persistence import drop_store
 import gspread
 
 # from utils import ConfigurationError
-import openerp_utils
-import google_utils
+# import openerp_utils
+import oerplib
+import google_utils, openerp_utils
 import manage_arguments
 
 from models.OErpModel import OErpModel
@@ -85,10 +86,11 @@ def main(workbook_key, start_row):
         print 'Workbook : {}'.format(workbook_key)
         wkbk = OErpModel.gDataConnection.open_by_key(workbook_key)
 
-        OErpModel.pumpCredentials = google_utils.getPumpCredentials(wkbk)
-        OErpModel.openErpConnection = openerp_utils.connect(OErpModel.pumpCredentials)
-		
-        dispatchTasks(wkbk, start_row)
+        creds = google_utils.getPumpCredentials(wkbk)
+        OErpModel.pumpCredentials = creds
+
+	if openerp_utils.OpenERP(creds) is not None:
+	    dispatchTasks(wkbk, start_row)
 
     print ''
 

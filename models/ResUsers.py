@@ -5,9 +5,11 @@ Created on 2013-03-19
 
 @author: Martin H. Bramwell
 '''
+import sys
 from OErpModel import OErpModel
 
 OPENERP_MODULE_NAME = 'res.users'
+ignored_fields = ("ResUsers", "login")
 
 class ResUsers(OErpModel):
 
@@ -50,25 +52,24 @@ class ResUsers(OErpModel):
     
     
     def update(self, parms):
-               
-        # Will update the OpenERP model 'res.user'
-        user_model = OErpModel.openErpConnection.get_model(OPENERP_MODULE_NAME)
+        oerp = super(ResUsers, self).getConnection()
 
         # Obtain an array of record ids that match the selection criteria (only one in this case)
-        thisUser = user_model.search([("login", "=", parms['login'])])[0]
+        idUser = oerp.search(OPENERP_MODULE_NAME, [("login", "=", parms['login'])])[0]
 
         # Read the existing data (only what we need)
-        nameUser = user_model.read(thisUser, ["name"])["name"]
-        print "Login " + parms['login'] + " -- " + nameUser
+        aUser = oerp.browse(OPENERP_MODULE_NAME, idUser)
+        print "Login " + parms['login'] + " -- " + aUser.login
 
         # Write it back out with update applied
-        for key  in parms:
-            if key not in ("ResUsers", "login"):    # Ignore the record key attribute
+        for key in parms:
+            if key not in ignored_fields:    # Ignore the record key attribute
                 val = OErpModel.parseSpecial(self, parms[key]) 
-                print 'Writing : (User : {}, "{}":"{}") from "{}"'.format(nameUser, key, val, parms[key])
-                user_model.write(thisUser, {key:val})
-                print 'Written'
+                print 'Editing : (User : {}, "{}":"{}") from "{}"'.format(aUser.login, key, val, parms[key])
+                setattr(aUser, key, val)
 
+        oerp.write_record(aUser)
+        print 'Written'
 
     def load(self, parms):
         print 'Calling parent to load to "{}".'.format(OPENERP_MODULE_NAME)

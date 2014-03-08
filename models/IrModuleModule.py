@@ -50,10 +50,12 @@ class IrModuleModule(OErpModel):
 
 
     def install_module(self, parms):
+        oerp = super(IrModuleModule, self).getConnection()
 
         print " - * - * - * - * - * - * - * - * - * - *"
+        oerp.config['timeout'] = 4 * oerp.config['timeout']
 
-        oerpModel = OErpModel.openErpConnection.get_model(OPENERP_MODULE_NAME)
+        oerpModel = oerp.get(OPENERP_MODULE_NAME)
 
         module_parms = super(IrModuleModule, self).getWorkingSource(parms)
         listModuleNames = module_parms['wksht'].col_values(1)
@@ -75,4 +77,5 @@ class IrModuleModule(OErpModel):
 
             idx += 1
 
+        oerp.config['timeout'] = oerp.config['timeout'] / 4
 

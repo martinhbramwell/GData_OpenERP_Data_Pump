@@ -50,6 +50,7 @@ class ResCountryState(OErpModel):
         data = super(ResCountryState, self).load(parms, OPENERP_MODULE_NAME)
         print 'Done in ResCountryState!'
     
+'''
     def loadXXX(self, parms):
         print 'Loading to "{}".'.format(OPENERP_MODULE_NAME)
         wkbk = OErpModel.gDataConnection.open_by_key(parms['docs_key'])
@@ -69,5 +70,5 @@ class ResCountryState(OErpModel):
         user_model = OErpModel.openErpConnection.get_model(OPENERP_MODULE_NAME)
         user_model.load(fields, data)
         print 'Done!'
-        
+'''        
 

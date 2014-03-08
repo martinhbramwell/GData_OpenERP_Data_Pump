@@ -6,11 +6,12 @@ Created on 2013-03-19
 @author: Martin H. Bramwell
 '''
 
+import sys
 from peak.util.imports import lazyModule
 
 class OErpModel(object):
 
-    openErpConnection = None
+    openErpConnection = {'super': None, 'admin': None}
     gDataConnection = None
     pumpCredentials = None
     
@@ -54,7 +55,11 @@ class OErpModel(object):
 
         self.modelIrModelData = None
 
-        
+    def getConnection(self):
+        if OErpModel.openErpConnection['admin'] is None:
+            sys.exit("You are not logged in to '{}' as user {}.".format(self.pumpCredentials['db_name'], self.pumpCredentials['user_id']))
+        return OErpModel.openErpConnection['super']
+
     def setIrModelDataModel(self):
         self.modelIrModelData = self.openErpConnection.get_model("ir.model.data")
 
@@ -233,6 +238,8 @@ class OErpModel(object):
 
 
     def load(self, parms, model):
+        oerp = self.getConnection()
+
         print 'Loading to "{}".'.format(model)
         wkbk = self.gDataConnection.open_by_key(parms['docs_key'])
         wksht = wkbk.worksheet(parms['docs_sheet'])
@@ -251,7 +258,7 @@ class OErpModel(object):
         for item in data:
             print str(item)[:80]
 
-        user_model = self.openErpConnection.get_model(model)
+        user_model = oerp.get(model)
         user_model.load(fields, data)
 
 #        print 'Done in OErpModel'
