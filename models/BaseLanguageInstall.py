@@ -10,10 +10,9 @@ from OErpModel import OErpModel
 OPENERP_MODULE_NAME = 'base.language.install'
 
 class BaseLanguageInstall(OErpModel):
-
     def __init__(self):
         super(BaseLanguageInstall, self).__init__()
-        
+      
         self.methods = {
               'chkTask': self.chkTask
             , 'install': self.install
@@ -45,11 +44,12 @@ class BaseLanguageInstall(OErpModel):
         print 'Task check for key "docs_sheet" found : "' + parms['docs_sheet'] + '"!'
 
     def install(self, parms):
+        oerp = super(BaseLanguageInstall, self).getConnection()
 
         module_parms = super(BaseLanguageInstall, self).getWorkingSource(parms)
         languages = module_parms['wksht'].col_values(1)
 
-        oerpModel = OErpModel.openErpConnection.get_model(OPENERP_MODULE_NAME)
+        oerpModel = oerp.get(OPENERP_MODULE_NAME)
 
         idx = module_parms['dictRange']['minRow'] - 1
         while (idx < module_parms['dictRange']['maxRow']):
