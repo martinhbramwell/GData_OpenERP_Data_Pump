@@ -11,8 +11,5 @@ key_ring['client_id'] = client_id
 access_token = 'ya29.1.AADtN_UTVx_AQIk_hVJ9g69Sj4kiWrl_AP02M2ZFQx3d_Gxc_03nASw32VEedJfmcCQhBg'
 #
 credentials = {
-      'cred_type': 'oauth'
-    , 'key_ring': key_ring
-    , 'access_token': access_token
+    'cred_type': 'oauth', 'key_ring': key_ring, 'access_token': access_token
 }
-
