@@ -9,47 +9,44 @@ from OErpModel import OErpModel
 
 OPENERP_MODULE_NAME = 'res.country.state'
 
+
 class ResCountryState(OErpModel):
 
     def __init__(self):
         super(ResCountryState, self).__init__()
-        
+
         self.methods = {
-              'chkTask': self.chkTask
-            , 'load': self.load
+            'chkTask': self.chkTask, 'load': self.load
         }
 
     def process(self, wrksht, rowTask):
         super(ResCountryState, self).process(wrksht, rowTask)
-        
+
         for idx, aMethod in enumerate(self.methodNames):
 
             if super(ResCountryState, self).todo(idx):
-                print '    #{} Doing "{}" now.'.format(idx+1, aMethod)
+                print '  #{} Doing "{}" now.'.format(idx + 1, aMethod)
                 super(ResCountryState, self).starting(idx)
 
-
-            	self.methods[aMethod](self.parameters)
-
+                self.methods[aMethod](self.parameters)
 
                 super(ResCountryState, self).finished(idx)
                 print '__'
             else:
-                print '    #{} Skipping "{}"!'.format(idx+1, aMethod)
+                print '    #{} Skipping "{}"!'.format(idx + 1, aMethod)
 
             pass
 
-
     def chkTask(self, parms):
-        print 'Task check for key "docs_key" found : "' + parms['docs_key'] + '"!'
-        print 'Task check for key "docs_sheet" found : "' + parms['docs_sheet'] + '"!'
+        print 'Check for "docs_key" found : "' + parms['docs_key'] + '"!'
+        print 'Check for "docs_sheet" found : "' + parms['docs_sheet'] + '"!'
 
     def load(self, parms):
         print 'Calling parent to load to "{}".'.format(OPENERP_MODULE_NAME)
 
         data = super(ResCountryState, self).load(parms, OPENERP_MODULE_NAME)
         print 'Done in ResCountryState!'
-    
+
 '''
     def loadXXX(self, parms):
         print 'Loading to "{}".'.format(OPENERP_MODULE_NAME)
@@ -70,5 +67,4 @@ class ResCountryState(OErpModel):
         user_model = OErpModel.openErpConnection.get_model(OPENERP_MODULE_NAME)
         user_model.load(fields, data)
         print 'Done!'
-'''        
-
+'''

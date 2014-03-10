@@ -1,7 +1,3 @@
 credentials = {
-      'cred_type': "uidpwd"
-    , 'uid': "your username"
-    , 'pwd': "your password"
+    'cred_type': "uidpwd", 'uid': "your username", 'pwd': "your password"
 }
-
-

@@ -9,40 +9,37 @@ from OErpModel import OErpModel
 
 OPENERP_MODULE_NAME = 'base.language.install'
 
+
 class BaseLanguageInstall(OErpModel):
 
     def __init__(self):
         super(BaseLanguageInstall, self).__init__()
 
         self.methods = {
-              'chkTask': self.chkTask
-            , 'install': self.install
+            'chkTask': self.chkTask, 'install': self.install
         }
 
     def process(self, wrksht, rowTask):
         super(BaseLanguageInstall, self).process(wrksht, rowTask)
-        
+
         for idx, aMethod in enumerate(self.methodNames):
 
             if super(BaseLanguageInstall, self).todo(idx):
-                print '    #{} Doing "{}" now.'.format(idx+1, aMethod)
+                print '    #{} Doing "{}" now.'.format(idx + 1, aMethod)
                 super(BaseLanguageInstall, self).starting(idx)
 
-
-            	self.methods[aMethod](self.parameters)
-
+                self.methods[aMethod](self.parameters)
 
                 super(BaseLanguageInstall, self).finished(idx)
                 print '__'
             else:
-                print '    #{} Skipping "{}"!'.format(idx+1, aMethod)
+                print '    #{} Skipping "{}"!'.format(idx + 1, aMethod)
 
             pass
 
-
     def chkTask(self, parms):
-        print 'Task check for key "docs_key" found : "' + parms['docs_key'] + '"!'
-        print 'Task check for key "docs_sheet" found : "' + parms['docs_sheet'] + '"!'
+        print 'Check for "docs_key" found : "' + parms['docs_key'] + '"!'
+        print 'Check for "docs_sheet" found : "' + parms['docs_sheet'] + '"!'
 
     def install(self, parms):
         oerp = super(BaseLanguageInstall, self).getConnection()
@@ -55,24 +52,24 @@ class BaseLanguageInstall(OErpModel):
         idx = module_parms['dictRange']['minRow'] - 1
         while (idx < module_parms['dictRange']['maxRow']):
             language = languages[idx]
-            print 'Creating model for "{}" with "{}".'.format(language, OPENERP_MODULE_NAME)
-            lid = oerpModel.create({'lang' : language})
+            print 'Creating model for "{}" with "{}".'.format(
+                language, OPENERP_MODULE_NAME)
+            lid = oerpModel.create({'lang': language})
             #lang_obj = oerpModel.read(lid)
             print 'Installing : ' + language
             oerpModel.lang_install([lid])
             print 'Installed : ' + language
             idx += 1
 
-
         '''
         languages = ['el_GR']
         for lang in languages:
         pass
-    
 
         print 'Calling parent to install "{}".'.format(parms['lang'])
 
-        # data = super(BaseLanguageInstall, self).load(parms, OPENERP_MODULE_NAME)
+        # data = super(BaseLanguageInstall, self).load(
+            parms, OPENERP_MODULE_NAME)
         print 'Done in BaseLanguageInstall!'
 
         '''
