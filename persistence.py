@@ -19,23 +19,23 @@ store_path = os.path.expanduser('~') + '/' + store_file
 def close_store():
     """ Remove the 'shelve' daemon from memory.
 """
-    if store :
+    if store:
         store.close()
+
 
 def make_store():
     """ Create a 'shelve' repository.
 """
     global store
-    store = shelve.open(store_path, writeback = True)
+    store = shelve.open(store_path, writeback=True)
     os.chmod(store_path, stat.S_IRUSR | stat.S_IWUSR)
     return store
-    
+
+
 def reopen_store():
     close_store()
     return make_store()
 
+
 def drop_store():
     os.remove(store_path)
-
-
-
