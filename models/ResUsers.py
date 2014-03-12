@@ -9,9 +9,9 @@ import sys
 from OErpModel import OErpModel
 
 OPENERP_MODULE_NAME = 'res.users'
-ignored_fields = ("ResUsers", "login")
-
-
+ignored_fields = ["ResUsers", "login"]
+indirect_fields = ["company_ids"]
+relations = {'company_ids': 'res.company'}
 class ResUsers(OErpModel):
 
     def __init__(self):
@@ -64,7 +64,12 @@ class ResUsers(OErpModel):
                 val = OErpModel.parseSpecial(self, parms[key])
                 print 'Editing : (User : {}, "{}":"{}") from "{}"'.format(
                     aUser.login, key, val, parms[key])
-                setattr(aUser, key, val)
+                if key in indirect_fields:
+                    ext_ids = parms[key].split(',')
+                    aUser.company_ids += list(super(ResUsers, self).get_aliased_records(ext_ids, relations[key]))
+                    pass
+                else:
+                    setattr(aUser, key, val)
 
         oerp.write_record(aUser)
         print 'Written'

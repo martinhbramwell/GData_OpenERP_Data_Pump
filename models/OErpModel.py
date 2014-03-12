@@ -9,6 +9,13 @@ Created on 2013-03-19
 import sys
 from peak.util.imports import lazyModule
 
+import oerplib
+
+class UnkownRecordError(Exception):
+    pass
+
+external_id_mapper = 'ir.model.data'
+
 class OErpModel(object):
 
     openErpConnection = {'super': None, 'admin': None}
@@ -198,7 +205,28 @@ class OErpModel(object):
             self.setIrModelDataModel()
         return self.modelIrModelData.search_read([("name", "=", ExtId), ("model", "=", model)], ["res_id"])[0]["res_id"]
 
+    def get_object_by_name(self, model, name):
+        oerp = self.getConnection()
+        id = oerp.search(model, [('name', 'ilike', name)])[0]
+        return oerp.get(model).browse(id)
 
+    def get_aliased_records(self, identifiers, model):
+        oerp = self.getConnection()
+        mapper = oerp.get(external_id_mapper)
+
+        print oerp
+        print external_id_mapper
+        print model
+        print identifiers
+
+        mappings = oerp.search(external_id_mapper, [('name', 'in', identifiers), ('model', '=', model)])
+        if len(mappings) == len(identifiers):
+            ids = [mapper.browse(relation).res_id for relation in mappings]
+            return oerp.get(model).browse(ids)
+
+        known = [mapper.browse(relation).name for relation in mappings]
+        missing = list(set(identifiers) - set(known))
+        raise UnkownRecordError("In '{}' - no references found to {}".format(model, missing))
 
 
     def colNumsFromColNames(self, names):  # the array starts with the minCol title as zeroth element!
