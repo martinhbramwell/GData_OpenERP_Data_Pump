@@ -14,7 +14,9 @@ import oerplib
 class UnkownRecordError(Exception):
     pass
 
-external_id_mapper = 'ir.model.data'
+INTERNAL_MAPPER_MODULE = 'ir.model.fields'
+EXTERNAL_ID_MAP_MODULE = 'ir.model.data'
+
 
 class OErpModel(object):
 
@@ -205,21 +207,48 @@ class OErpModel(object):
             self.setIrModelDataModel()
         return self.modelIrModelData.search_read([("name", "=", ExtId), ("model", "=", model)], ["res_id"])[0]["res_id"]
 
-    def get_object_by_name(self, model, name):
+    def get_object_by_field(self, field, model, name, match = 'ilike'):
+    
         oerp = self.getConnection()
-        id = oerp.search(model, [('name', 'ilike', name)])[0]
-        return oerp.get(model).browse(id)
+        try:
+            id = oerp.search(model, [(field, match, name)])[0]
+            return oerp.get(model).browse(id)
+        except IndexError:
+            return None
+
+    def get_mapping_by_property(self, model, field):
+        oerp = self.getConnection()
+        print "Model = {}. Field = {}.".format(model, field)
+        
+        mapping = oerp.search(INTERNAL_MAPPER_MODULE, [('name', '=', field), ('model', '=', model)])
+        print "Mapping = {}.".format(mapping)
+        return self.get_object_by_res_id(EXTERNAL_ID_MAP_MODULE, mapping)
+
+    def get_object_by_name(self, model, name):
+        return self.get_object_by_field('name', model, name)
+
+    def get_object_by_res_id(self, model, code):
+        return self.get_object_by_field('res_id', model, code, match = '=')
+
+    def get_object_id_by_code(self, model, code):
+        return self.get_object_by_field('code', model, code).id
+
+    def get_object_id_by_name(self, model, code):
+        return self.get_object_by_field('name', model, code).id
+
 
     def get_aliased_records(self, identifiers, model):
         oerp = self.getConnection()
-        mapper = oerp.get(external_id_mapper)
+        mapper = oerp.get(EXTERNAL_ID_MAP_MODULE)
 
+        '''
         print oerp
-        print external_id_mapper
+        print EXTERNAL_ID_MAP_MODULE
         print model
         print identifiers
+        '''
 
-        mappings = oerp.search(external_id_mapper, [('name', 'in', identifiers), ('model', '=', model)])
+        mappings = oerp.search(EXTERNAL_ID_MAP_MODULE, [('name', 'in', identifiers), ('model', '=', model)])
         if len(mappings) == len(identifiers):
             ids = [mapper.browse(relation).res_id for relation in mappings]
             return oerp.get(model).browse(ids)
@@ -229,11 +258,12 @@ class OErpModel(object):
         raise UnkownRecordError("In '{}' - no references found to {}".format(model, missing))
 
 
-    def colNumsFromColNames(self, names):  # the array starts with the minCol title as zeroth element!
+    def colNumsFromColNames(self, names):
+        # the array starts with the minCol title as zeroth element!
         titles = {}
         for title in names:
             titles[title] = names[title]
-            print 'OErpModel >>>>>>>>>>>>>>>>>> Name : {}.  Number : {}.'.format(title, titles[title])
+            print 'OErpModel: Name-{}. Number-{}.'.format(title, titles[title])
         
         return titles
 
@@ -255,9 +285,12 @@ class OErpModel(object):
         module_parms['wkbk'] = self.gDataConnection.open_by_key(parms['docs_key'])
         module_parms['wksht'] = module_parms['wkbk'].worksheet(parms['docs_sheet'])
 
-        module_parms['dictRange'] = self.getCellsRange(module_parms['wksht'], parms['data_range'])
-        module_parms['numCols'] = self.right_most_column(module_parms['dictRange']['rangeDef'], module_parms['wksht'])
-        module_parms['nameCol'] = self.title_row(module_parms['dictRange'], module_parms['wksht'])
+        module_parms['dictRange'] = self.getCellsRange(
+            module_parms['wksht'], parms['data_range'])
+        module_parms['numCols'] = self.right_most_column(
+            module_parms['dictRange']['rangeDef'], module_parms['wksht'])
+        module_parms['nameCol'] = self.title_row(
+            module_parms['dictRange'], module_parms['wksht'])
 
         # print 'Column count is ' + str(module_parms['numCols'])
 
@@ -268,7 +301,7 @@ class OErpModel(object):
     def load(self, parms, model):
         oerp = self.getConnection()
 
-        print 'Loading to "{}".'.format(model)
+        print 'Loading  to "{}".'.format(model)
         wkbk = self.gDataConnection.open_by_key(parms['docs_key'])
         wksht = wkbk.worksheet(parms['docs_sheet'])
         
@@ -281,7 +314,8 @@ class OErpModel(object):
         print ' - - - fields - - - '
         print fields
         
-        data = self.groupToArray(numCols, [cell.value for cell in wksht.range(parms['data_range'])])
+        rng =  wksht.range(parms['data_range'])
+        data = self.groupToArray(numCols, [cell.value for cell in rng])
         print ' - - -  data  - - - '
         for item in data:
             print str(item)[:80]
@@ -321,4 +355,5 @@ class OErpModel(object):
     def testIt(self, task):
         getattr(lazyModule('models.' + task), task)().test("AAA")
         return
+# - - - -
 

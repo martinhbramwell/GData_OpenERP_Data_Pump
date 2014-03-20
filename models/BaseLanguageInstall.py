@@ -45,6 +45,12 @@ class BaseLanguageInstall(OErpModel):
         oerp = super(BaseLanguageInstall, self).getConnection()
 
         module_parms = super(BaseLanguageInstall, self).getWorkingSource(parms)
+        print " wkbk -- {}".format(module_parms['wkbk'])
+        print " wksht -- {}".format(module_parms['wksht'])
+        print " dictRange -- {}".format(module_parms['dictRange'])
+        print " numCols -- {}".format(module_parms['numCols'])
+        print " nameCol -- {}".format(module_parms['nameCol'])
+        
         languages = module_parms['wksht'].col_values(1)
 
         oerpModel = oerp.get(OPENERP_MODULE_NAME)
